@@ -5,6 +5,8 @@ a table on which there are games
  - [ ] players should log in
  - [ ] they should see other players at the table
  - [ ] they should be able to play some games
+ - [ ] the game should involve simultaneous input, not necessarily real-time
+ - [ ] the game should update each player's displays via angular's reactive models
 
 
 ## websockets
