@@ -7,6 +7,10 @@
   = f.password_field :password
   = f.submit 'login'
 
+%div{"ng-controller" => "user"}
+  %p
+    {{greeting}}
+
 %p #{@a}
 
 %p
