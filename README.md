@@ -9,10 +9,15 @@ a table on which there are games
  - [ ] the game should update each player's displays via angular's reactive models
 
 
+# resources
 ## websockets
 - [websocket-rails](https://github.com/websocket-rails/websocket-rails)
     - http://webchat.freenode.net/#websocket-rails
 
+## authentication with rails and angular
+- [angular_devise](https://github.com/cloudspace/angular_devise)
+
+# details
 ## rails
 ### debugging
 ```ruby
