@@ -1,3 +1,4 @@
+%html{"ng-app" => "games"}
 %h1 Login
 = form_for(:session, url: login_path) do |f|
   = f.label :name
@@ -6,7 +7,13 @@
   = f.password_field :password
   = f.submit 'login'
 
+%div{"ng-controller" => "user"}
+  %p
+    {{greeting}}
+
 %p #{@a}
+
+%button "set"
 
 %p
   = debug params
