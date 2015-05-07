@@ -1,5 +1,4 @@
-class SessionsController < WebsocketRails::ApplicationController
-#class SessionsController < ApplicationController
+class SessionsController < ApplicationController
   include SessionsHelper
 
   def show
@@ -23,10 +22,6 @@ class SessionsController < WebsocketRails::ApplicationController
     logger.debug "B" * 1000
     logger.debug session
     # render 'new'
-  end
-
-  def destroy
-    
   end
 
 end
