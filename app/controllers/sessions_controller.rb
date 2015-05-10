@@ -1,5 +1,4 @@
-class SessionsController < WebsocketRails::ApplicationController
-#class SessionsController < ApplicationController
+class SessionsController < ApplicationController
   include SessionsHelper
 
   def show
@@ -15,11 +14,16 @@ class SessionsController < WebsocketRails::ApplicationController
     if user && user.password == params[:session][:password]
       log_in user
       @a = 'logged in'
+      redirect_to moves_path
     else
       @a = 'not logged in'
+      render 'new'
     end
     logger.debug "B" * 1000
     logger.debug session
-    render 'new'
+    # render 'new'
   end
+
 end
+
+
