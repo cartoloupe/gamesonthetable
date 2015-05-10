@@ -1,8 +1,13 @@
-class SessionsController < ApplicationController
+class SessionsController < WebsocketRails::ApplicationController
+#class SessionsController < ApplicationController
   include SessionsHelper
 
-  def new
+  def show
+    @test = "show triggered"
+    #send_message :create
+  end
 
+  def client_connected
   end
 
   def create
