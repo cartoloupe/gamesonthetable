@@ -9,6 +9,11 @@ $(document).ready(function() {
   $('#submit-move').on('click', function() {
     submitMove($('#new-move').val());
   });
+  $('.another-move').on('click', function() {
+    var a = $('.another-move').text();
+    console.log("submitting " + a);
+    submitMove(parseInt(a));
+  });
 });
 
 

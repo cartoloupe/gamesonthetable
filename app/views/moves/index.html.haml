@@ -1,8 +1,10 @@
 #moves{ "ng-controller"=>"MovesController"}
   %h1 moves
-  
+
   {{newMove}}
- 
+
+  %button.another-move{"ng-submit" => "saveMove()", "ng-model" => "newMove.number_of_moves"} 3
+
   %form{"ng-submit"=> "saveMove()"}
     %input#new-move{ "ng-model"=>"newMove.number_of_moves", "type"=>"number", "required"=>"true"}
     %input{"type"=>"submit", "value"=>"Save Move"} 
