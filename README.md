@@ -12,7 +12,8 @@ a table on which there are games
 # resources
 ## websockets
 - [websocket-rails](https://github.com/websocket-rails/websocket-rails)
-    - http://webchat.freenode.net/#websocket-rails
+  - http://webchat.freenode.net/#websocket-rails
+  - [moaa/websocket-rails-demo](https://github.com/moaa/websocket-rails-demo) 
 
 ## authentication with rails and angular
 - [angular_devise](https://github.com/cloudspace/angular_devise)
