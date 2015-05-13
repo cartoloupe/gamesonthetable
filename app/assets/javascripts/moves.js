@@ -9,6 +9,18 @@ $(document).ready(function() {
   $('#submit-move').on('click', function() {
     submitMove($('#new-move').val());
   });
+  
+  $('.another-move').on('click', function(d,i) {
+    var a = $('.another-move').text();
+    console.log("submitting " + a);
+    var delta = parseInt(a);
+    submitMove(parseInt(a));
+    var circle = $('svg circle');
+    var circle_cx = parseInt(circle.attr("cx"));
+    circle.attr("cx", circle_cx + delta);
+    circle.remove();
+    $('svg').append(circle);
+  });
 });
 
 
