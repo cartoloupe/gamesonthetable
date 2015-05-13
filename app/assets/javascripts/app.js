@@ -100,5 +100,9 @@
     }
   }]);
 
+  movesApp.controller('user', ['$scope', function($scope){
+    $scope.greeting = 'user1';
+  }]);
+
 
 // })(angular);

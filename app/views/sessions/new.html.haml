@@ -1,4 +1,6 @@
-/ %div{"ng-controller" => "games"}
+%button{href: '/login/a'} a
+%button{href: '/login/b'} b
+
 %h1 Login
 = form_for(:session, url: login_path) do |f|
   = f.label :name
@@ -7,8 +9,8 @@
   = f.password_field :password
   = f.submit 'login'
 
-  %div{"ng-controller" => "user"}
-    %p
-      {{greeting}}
+%div{"ng-controller" => "user"}
+  %p
+    {{greeting}}
 
 %p #{@a}
