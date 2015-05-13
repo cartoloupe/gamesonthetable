@@ -1,5 +1,5 @@
-(function(ng) {
-  var movesApp = ng.module("moves", [])
+// (function(ng) {
+  var movesApp = angular.module("moves", [])
   movesApp.run(function() {
     console.log('movesApp');
 
@@ -53,7 +53,7 @@
       dispatcher.bind('moves', 'create', function(moveData) {
         var move = new MoveResource(moveData.number_of_moves);
         // $rootScope.$apply(function() {
-          handler(move);
+        handler(move);
         // });
       });
     }
@@ -68,6 +68,13 @@
 
     return MoveResource;
   }])
+
+  movesApp.controller('user', ['$scope', function($scope) {
+    $scope.greeting = 'user1';
+
+  }]);
+
+
 
   movesApp.controller('MovesController', ['MoveResource', '$scope', function(MoveResource, $scope) {
     console.log(MoveResource);
@@ -94,4 +101,4 @@
   }]);
 
 
-})(angular);
+// })(angular);

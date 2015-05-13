@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-#moves{ "ng-controller"=>"MovesController"}
+
+%div#moves{ "ng-controller"=>"MovesController"}
   %h1 moves
   
   {{newMove}}
@@ -14,7 +14,9 @@
   %button.another-move{"ng-submit" => "saveMove()", "ng-model" => "newMove.number_of_moves"} 3
 
   %button.another-move.minus{"ng-submit" => "saveMove()", "ng-model" => "newMove.number_of_moves"} -3
-
+  
+  %svg{"width" => "200", "height" => "200"}
+    %circle{ "cx" => "150", "cy" => "150", "r" => "20", "fill" => "red" }
 
   %form{"ng-submit"=> "saveMove()"}
     %input#new-move{ "ng-model"=>"newMove.number_of_moves", "type"=>"number", "required"=>"true"}
@@ -24,12 +26,3 @@
   %ul
     %li{ "ng-repeat" => "move in moves"}
       {{move.number_of_moves}}
-
-
-  %svg{"width" => "300", "height" => "300"}
-    %circle{ "cx" => "150", "cy" => "150", "r" => "20", "fill" => "red" }
-
-  %ul
-    %li{ "ng-repeat" => "move in moves"}
-      {{move.number_of_moves}}
->>>>>>> b6b58fc4bdd24be0fc4246d4ecb556c99e2ff794
