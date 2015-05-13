@@ -8,7 +8,7 @@
 User.create(name: 'a', password: 'a')
 User.create(name: 'b', password: 'b')
 
-Move.create(users_id: 1, number_of_moves: 5)
-Move.create(users_id: 2, number_of_moves: 1)
-Move.create(users_id: 2, number_of_moves: 3)
-Move.create(users_id: 1, number_of_moves: 5)
+Move.create(user_id: 1, number_of_moves: 5)
+Move.create(user_id: 2, number_of_moves: 1)
+Move.create(user_id: 2, number_of_moves: 3)
+Move.create(user_id: 1, number_of_moves: 5)

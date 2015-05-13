@@ -14,13 +14,13 @@
 ActiveRecord::Schema.define(version: 20150506233543) do
 
   create_table "moves", force: :cascade do |t|
-    t.integer  "users_id"
+    t.integer  "user_id"
     t.integer  "number_of_moves"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
-  add_index "moves", ["users_id"], name: "index_moves_on_users_id"
+  add_index "moves", ["user_id"], name: "index_moves_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",            null: false
