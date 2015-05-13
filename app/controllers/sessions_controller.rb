@@ -19,9 +19,6 @@ class SessionsController < ApplicationController
       @a = 'not logged in'
       render 'new'
     end
-    logger.debug "B" * 1000
-    logger.debug session
-    # render 'new'
   end
 
 end
