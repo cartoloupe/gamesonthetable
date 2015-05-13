@@ -15,4 +15,4 @@
 //= require angular
 //= require_tree .
 //= require websocket_rails/main
-
+//= require app
