@@ -18,9 +18,13 @@ class MovesController < ApplicationController
 
   def create
     # raise params.inspect
-    logger.info params.inspect
-    @move = Move.create(move_params)
-    render json: @move
+    # logger.info params.inspect
+    user = User.find(session[:game_user])
+    @some_move = Move.where(user: user).first
+    @some_move.update(number_of_moves: move_params[:number_of_moves])
+    # @move = Move.create(move_params)
+    # render json: @move
+    render json: @some_move
   end
 
   private

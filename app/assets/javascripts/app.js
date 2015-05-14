@@ -63,6 +63,7 @@
       return $http.post('/moves.json', this).success(function(moveData) {
         var move = new MoveResource(moveData.number_of_moves);
         successCallBack(move);
+        console.log('save and return');
       });
     };
 
@@ -84,7 +85,9 @@
     });
 
     MoveResource.onCreate(function(move) {
-      console.log(move);
+      console.log('Yay');
+      // console.log(move);
+      // console.log($scope.moves);
       $scope.moves.push(move);
     })
 
