@@ -12,14 +12,6 @@
   %p= "Current user is #{current_user.email}"
   %p= link_to "Logout", destroy_user_session_url, method: :delete
 
-/ %h1 Login
-/ = form_for(:session, url: login_path) do |f|
-/   = f.label :name
-/   = f.text_field :name
-/   = f.label :password
-/   = f.password_field :password
-/   = f.submit 'login'
-
   %div{"ng-controller" => "user"}
     %p
       {{greeting}}
