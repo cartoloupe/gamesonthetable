@@ -16,3 +16,4 @@
 //= require_tree .
 //= require websocket_rails/main
 //= require app
+//= require angular-devise
