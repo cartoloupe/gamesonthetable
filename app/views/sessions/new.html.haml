@@ -1,7 +1,7 @@
-/ Question for 
+%H2 gamesOnTheTable
 
-
-%H2 Traditional Rails/Devise login and logout
+%p Login and logout
+%p Launch our SPA
 
 - unless user_signed_in?
   %p User is not signed in
@@ -12,7 +12,7 @@
   %p= "Current user is #{current_user.email}"
   %p= link_to "Logout", destroy_user_session_url, method: :delete
 
-  %div{"ng-controller" => "user"}
+  %div{"ng-controller" => "UserController"}
     %p
       {{greeting}}
 
@@ -20,6 +20,9 @@
 
     %button{"ng-click" => 'getUser()'}
       getUser
+
+  %p
+    =  link_to 'Go to a game!', page_path('game')
 
 / %p
 /   = debug params
