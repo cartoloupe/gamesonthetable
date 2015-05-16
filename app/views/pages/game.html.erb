@@ -1,0 +1,32 @@
+<div id='user_info' ng-controller='UserController'>
+	<h1>User Information</h1>
+	<p>Current user (retrieved with erb) is <%= current_user.email %></p>
+	<p>Current user (retrieved with Angular) is {{greeting}}</p>
+  <button ng-click='getUser()'>getUser</button>
+</div>
+
+<div id='moves' ng-controller='MovesController'>
+  <h1>Moves</h1>
+  <p>NewMove= {{newMove}}</p>
+  <p>Number_of_moves= {{move.number_of_moves}}</p>
+
+  <svg height='200' width='200'>
+    <circle cx='150' cy='150' fill='red' r='20'></circle>
+  </svg>
+
+  <h5>Seems that this code uses regular javascript in moves.js rather than our angular app. But, we use ng-submit, which doesn't get fired. And ng-model, which maybe does?</h2>
+  <button class='another-move' ng-model='newMove.number_of_moves' ng-submit='saveMove()'>3</button>
+  <button class='another-move minus' ng-model='newMove.number_of_moves' ng-submit='saveMove()'>-3</button>
+
+	<h2>Whereas this uses our angular app</h2>
+
+  <form ng-submit='saveMove()'>
+    <input id='new-move' ng-model='newMove.number_of_moves' required='true' type='number'>
+    <input type='submit' value='Save Move'>
+  </form>
+  <ul>
+    <li ng-repeat='move in moves'>
+      {{move.number_of_moves}}
+    </li>
+  </ul>
+</div>

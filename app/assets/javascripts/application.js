@@ -10,10 +10,16 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//
+// In GOT, we want to require app (which sets up the angular app), before any controllers. This is why
+// we specifically have require app before require_tree.
+//
 //= require jquery
 //= require jquery_ujs
 //= require angular
+//= require angular-devise
+//= require app
 //= require_tree .
 //= require websocket_rails/main
-//= require app
-//= require angular-devise
+
+

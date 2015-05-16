@@ -1,12 +1,12 @@
-var myApp = angular.module('games', ['Devise']);
+// var myApp = angular.module('games', ['Devise']);
 
-myApp.config(function(AuthProvider) { // Configure Auth service with AuthProvider 
+movesApp.config(function(AuthProvider) { // Configure Auth service with AuthProvider 
 });
 
 
-myApp.controller('user', ['$scope', 'Auth', function($scope, Auth) {
+movesApp.controller('UserController', ['$scope', 'Auth', function($scope, Auth) {
 
-  $scope.greeting = 'no user logged in yet';
+  $scope.greeting = 'no user retrieved yet';
 
   // Auth.currentUser().then(function(user) { 
   // 	// User was logged in, or Devise returned 

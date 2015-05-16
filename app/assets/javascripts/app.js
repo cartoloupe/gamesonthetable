@@ -1,5 +1,5 @@
 // (function(ng) {
-  var movesApp = angular.module("moves", [])
+  var movesApp = angular.module("moves", ['Devise'])
   movesApp.run(function() {
     console.log('movesApp');
 
@@ -69,10 +69,10 @@
     return MoveResource;
   }])
 
-  movesApp.controller('user', ['$scope', function($scope) {
-    $scope.greeting = 'user1';
+  // movesApp.controller('user', ['$scope', function($scope) {
+  //   $scope.greeting = 'user1';
 
-  }]);
+  // }]);
 
 
 
@@ -98,6 +98,7 @@
         $scope.newMove = new MoveResource();
       });
     }
+
   }]);
 
 
