@@ -1,5 +1,3 @@
-source 'https://rubygems.org'
-
 gem 'haml-rails'
 gem 'websocket-rails'
 
@@ -33,6 +31,7 @@ source "https://rails-assets.org" do
 end
 
 gem 'high_voltage', '~> 2.3.0'
+gem 'sexp_processor', '~> 4.5.1'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
