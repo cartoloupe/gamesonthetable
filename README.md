@@ -19,6 +19,13 @@ a table on which there are games
 - [angular_devise](https://github.com/cloudspace/angular_devise)
 
 # details
+## js
+### assets
+`bundle exec rake -T bower`
+assets are located in the `Bowerfile`
+`bundle exec rake bower:install` to install them
+
+
 ## rails
 ### debugging
 ```ruby
