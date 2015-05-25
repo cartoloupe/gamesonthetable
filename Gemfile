@@ -1,5 +1,6 @@
 gem 'haml-rails'
 gem 'websocket-rails'
+gem 'bower-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
