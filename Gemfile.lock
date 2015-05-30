@@ -1,4 +1,5 @@
 GEM
+  remote: https://rubygems.org/
   remote: https://rails-assets.org/
   specs:
     actionmailer (4.2.0)

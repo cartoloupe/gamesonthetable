@@ -1,3 +1,5 @@
+source 'https://rubygems.org'
+
 gem 'haml-rails'
 gem 'websocket-rails'
 gem 'bower-rails'
