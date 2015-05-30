@@ -9,6 +9,10 @@ a table on which there are games
  - [ ] the game should update each player's displays via angular's reactive models
 
 
+## setup
+1. set up assets: `bundle exec rake bower:install`
+1. run the server: `bundle exec rails server`
+
 # resources
 ## websockets
 - [websocket-rails](https://github.com/websocket-rails/websocket-rails)
@@ -24,6 +28,7 @@ a table on which there are games
 `bundle exec rake -T bower`
 assets are located in the `Bowerfile`
 `bundle exec rake bower:install` to install them
+- ^ [from this tutorial](http://angular-rails.com/find_and_browse.html)
 
 
 ## rails
