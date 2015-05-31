@@ -13,5 +13,9 @@ WebsocketRails::EventMap.describe do
   # The above will handle an event triggered on the client like `product.new`.
   namespace :moves do
     subscribe :create, :to => WebsocketMovesController, :with_method => :create
+    subscribe :destroy, :to => WebsocketMovesController, :with_method => :destroy
+  end
+  namespace :user do
+    subscribe :logged_in, :to => WebsocketMovesController, :with_method => :user_logged_in
   end
 end
