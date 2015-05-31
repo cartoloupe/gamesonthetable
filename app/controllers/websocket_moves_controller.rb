@@ -9,6 +9,7 @@ class WebsocketMovesController < WebsocketRails::BaseController
   end
 
   def user_logged_in
+    # The `message` method contains the data received
     WebsocketRails[:user].trigger 'logged_in', message[:user]
   end
 
