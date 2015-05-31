@@ -1,11 +1,24 @@
 .board tr td {
   background-color: gray;
-  border: 3px solid #dddddd;
   padding: 10px 10px 10px 20px;
-  border: 2px 4px 3px 10px;
   margin: 5px 5px 5px 5px;
+}
+
+$wall: black;
+.north {
+  border-top: 3px solid $wall;
+}
+.west {
+  border-left: 3px solid $wall;
+}
+.east {
+  border-right: 3px solid $wall;
+}
+.south {
+  border-bottom: 3px solid $wall;
 }
 
 #user_info {
   margin-left: 10%;
 }
+

@@ -3,11 +3,11 @@
   <br>
   <div class="row">
     <div class="board col-md-6">
-      <table class="table-bordered">
-        <% 10.times do |n| %>
+      <table class="xtable-bordered">
+        <% gridsize.times do |n| %>
           <tr>
-            <% 10.times do |m| %>
-              <td> <%= m*n %> </td>
+            <% gridsize.times do |m| %>
+              <td class= <%= getWalls m, n %> > <%= n*gridsize+m %> </td>
             <% end %>
           </tr>
         <% end %>
