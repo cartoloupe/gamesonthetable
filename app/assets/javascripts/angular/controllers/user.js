@@ -7,7 +7,7 @@ movesApp.config(function(AuthProvider) { // Configure Auth service with AuthProv
 movesApp.controller('UserController', ['$scope', 'Auth', function($scope, Auth) {
 
   $scope.current_user = 'no user retrieved yet';
-  $scope.current_users = 'none yet';
+  $scope.current_users = [];
 
   $scope.getUser = function() {
     console.log("getting user");
@@ -17,14 +17,18 @@ movesApp.controller('UserController', ['$scope', 'Auth', function($scope, Auth) 
       // previously authenticated session.
       console.log(user.email); // => {id: 1, ect: '...'}
       $scope.current_user = user.email;
+      $scope.current_users.push(user.email);
     }, function(error) {
       // unauthenticated error
       console.log("unauthenticated")
     });
   }
 
+  /*
   $scope.getUsers = function() {
     //
+    $scope.current_users;
   }
+  */
 
 }]);
