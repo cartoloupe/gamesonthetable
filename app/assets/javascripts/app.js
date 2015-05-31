@@ -1,7 +1,7 @@
 // (function(ng) {
   var movesApp = angular.module("moves", ['Devise'])
   movesApp.run(function() {
-    console.log('movesApp');
+    //console.log('movesApp');
 
   });
   movesApp.config(['$httpProvider', function($httpProvider) {
@@ -12,7 +12,11 @@
 
   movesApp.service('dispatcher', ['$rootScope', function($rootScope) {
     var dispatcher = new WebSocketRails(window.location.host + '/websocket');
-    console.log(dispatcher);
+    //console.log(dispatcher);
+    dispatcher.on_open = function(data) {
+      console.log('Connection has been established: ', data);
+    }
+
     var Dispatcher = function() {
       //    var createChannel = function (channelName) {
       //     return dispatcher.subscribe(channelName);
@@ -24,7 +28,11 @@
             callBack(data);
           })
         });
+      },
+      this.trigger = function(channelName, someObject) {
+        dispatcher.trigger(channelName, someObject);
       }
+
     }
     return new Dispatcher();
   }]);
@@ -51,6 +59,8 @@
 
     MoveResource.onCreate = function(handler) {
       dispatcher.bind('moves', 'create', function(moveData) {
+        //console.log("moveData:");
+        //console.log(moveData);
         var move = new MoveResource(moveData.number_of_moves);
         // $rootScope.$apply(function() {
         handler(move);
@@ -66,37 +76,41 @@
       });
     };
 
+    MoveResource.prototype.destroy = function(successCallBack) {
+      dispatcher.trigger('moves.destroy', {});
+    };
+
+
     return MoveResource;
   }])
 
-  // movesApp.controller('user', ['$scope', function($scope) {
-  //   $scope.greeting = 'user1';
-
-  // }]);
-
-
 
   movesApp.controller('MovesController', ['MoveResource', '$scope', function(MoveResource, $scope) {
-    console.log(MoveResource);
+    //console.log(MoveResource);
     MoveResource.all(function(moves) {
-      console.log("success");
+      //console.log("success");
       $scope.moves = moves;
     });
 
     MoveResource.onCreate(function(move) {
-      console.log(move);
+      //console.log(move);
       $scope.moves.push(move);
     })
 
     $scope.newMove = new MoveResource();
 
     $scope.saveMove = function() {
-      console.log('click saveMove');
+      //console.log('click saveMove');
       $scope.newMove.save(function(move) {
-        console.log(move);
+        //console.log(move);
         // $scope.moves.push(move);
         $scope.newMove = new MoveResource();
       });
+    }
+
+    $scope.destroyMove = function() {
+      //console.log('click destroyMove');
+      $scope.newMove.destroy();
     }
 
   }]);
