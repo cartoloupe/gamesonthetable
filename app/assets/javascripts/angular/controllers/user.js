@@ -17,7 +17,12 @@ movesApp.controller('UserController', ['$scope', 'Auth', function($scope, Auth) 
       // previously authenticated session.
       console.log(user.email); // => {id: 1, ect: '...'}
       $scope.current_user = user.email;
-      $scope.current_users.push(user.email);
+
+      // only add user to current_users if they don't already exist
+      if ($scope.current_users.indexOf(user.email) == -1){
+        $scope.current_users.push(user.email);
+      }
+      console.log([$scope.current_users, user.email]);
     }, function(error) {
       // unauthenticated error
       console.log("unauthenticated")
