@@ -1,0 +1,23 @@
+%H1 Select a Game
+
+#moves{"ng-controller" => "GamesCtrl"}
+	%table
+		%tr
+			%th Name
+			%th Seconds Remaining
+			%th Number of Users
+			%th Game is open?
+			%th Status code
+			%th Join?
+		%tr{"ng-repeat" => "game in games"}
+			%td {{game.name}}
+			%td	{{game.secs_left}}
+			%td {{game.num_users}}
+			%td {{game.open}}
+			%td {{game.status_cd}}
+			%td link
+
+	%br
+
+	%button{"ng-click" => 'getGames()'}
+		getGames
