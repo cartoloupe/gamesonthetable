@@ -1,5 +1,6 @@
 %h2 gamesOnTheTable
 
+%p This file is sessions#new
 %p Login and logout
 %p Launch our SPA
 
@@ -22,5 +23,9 @@
       getUser
 
   %p
-    =  link_to 'Go to a game!', page_path('game')
+    = link_to 'Go to a game!', page_path('game')
+  %p
+    = link_to 'Go to select_a_game!', page_path('select_game')
+  %p
+    = link_to 'List the games', games_path
 
