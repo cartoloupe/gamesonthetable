@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'games/index'
+  get 'games/geodes'
+
   resources :moves
   devise_for :users
 
