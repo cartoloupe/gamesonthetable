@@ -1,37 +1,35 @@
-%h2.col-md-4.col-md-offset-4 gamesOnTheTable
-
-%br
-%br
-%br
-%br
-
 .row
-  %div.col-md-2.col-md-offset-5
-    %p Login and logout
-    %p Launch our SPA
+  .col-md-2.col-md-offset-5{"ng-controller" => "UserController"}
 
-.row
-  .col-md-3
-  .col-md-3
+    %h2 gamesOnTheTable
+
+    %p This file is sessions#new. It's functions are:
+    %ul
+      %li Login and logout
+      %li Launch our SPA
+
     - unless user_signed_in?
       %p User is not signed in
       %p= link_to "Sign up", new_user_registration_path
       %p= link_to "Login", new_user_session_path
+
     - else
       %p= "Current user is #{current_user.email}"
-      %button= link_to "Logout", destroy_user_session_url, method: :delete
+      %p= link_to "Logout", destroy_user_session_url, method: :delete
 
-  .col-md-3
-    %button
-      =  link_to 'Go to a game!', page_path('game')
+      / %div{"ng-controller" => "UserController"}
 
-.row
-  .col-md-2.col-md-offset-5{"ng-controller" => "UserController"}
-    %p
-      {{greeting}}
+      /   %p
+      /     {{greeting}}
 
-    %p #{@a}
+      /   %p #{@a}
 
-    %button{"ng-click" => 'getUser()'}
-      getUser
+      /   %button{"ng-click" => 'getUser()'}
+      /     getUser
 
+      %p
+        = link_to 'Go to a game!', page_path('game')
+      %p
+        = link_to 'Go to select_a_game!', page_path('select_game')
+      %p
+        = link_to 'List the games', games_path

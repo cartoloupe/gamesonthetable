@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  secs_left: 1
+  num_users: 1
+  open: false
+
+two:
+  name: MyString
+  secs_left: 1
+  num_users: 1
+  open: false

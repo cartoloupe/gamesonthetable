@@ -33,6 +33,7 @@ end
 
 gem 'high_voltage', '~> 2.3.0'
 gem 'sexp_processor', '~> 4.5.1'
+gem 'simple_enum'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -42,7 +43,6 @@ gem 'sexp_processor', '~> 4.5.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
 
 
 group :development, :test do
