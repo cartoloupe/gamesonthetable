@@ -21,6 +21,7 @@
 //= require angular-devise
 //= require app
 //= require_tree .
+//= three.min.js
 //= require websocket_rails/main
 
 
