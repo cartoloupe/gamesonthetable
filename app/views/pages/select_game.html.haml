@@ -1,23 +1,40 @@
-%H1 Select a Game
+.row
+	.col-sm-12
+		%H1 Select a Game
 
-#moves{"ng-controller" => "GamesCtrl"}
-	%table
-		%tr
-			%th Name
-			%th Seconds Remaining
-			%th Number of Users
-			%th Game is open?
-			%th Status code
-			%th Join?
-		%tr{"ng-repeat" => "game in games"}
-			%td {{game.name}}
-			%td	{{game.secs_left}}
-			%td {{game.num_users}}
-			%td {{game.open}}
-			%td {{game.status_cd}}
-			%td link
+		#moves{"ng-controller" => "GamesCtrl"}
+			%table.table
+				%tr
+					%th Name
+					%th Time Remaining
+					%th End Time
+					%th Number of Users
+					%th Status code
+					%th Join?
+				%tr{"ng-repeat" => "game in games", "ng-init" => "mytime = game.end_time_ms"}
+					%td {{game.name}}
+					%td <timer end-time="mytime">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds</timer>
+					%td {{game.end_time}}
+					%td {{game.num_users}}
+					%td {{game.status}}
+					%td link
 
-	%br
+			%br
 
-	%button{"ng-click" => 'getGames()'}
-		getGames
+			%button{"ng-click" => 'getGames()'}
+				getGames
+
+-# %br
+-#
+-# %button{"ng-click" => 'setTimers()'}
+-# 	setTimer
+
+// :javascript
+// 	$('.countdown').countdown({
+// 	    digits: 10,
+// 	    number: 12345678,
+// 	    duration: 20000000,
+// 	    animateTo: 0
+// 	});
+
+// "ngc-done" => "'scope.setTimers'"

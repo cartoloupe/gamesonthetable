@@ -16,10 +16,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap/dist/js/bootstrap
 //= require angular
 //= require angular-devise
+//= require datepicker/datepicker
+//= require jquery-countdown
+//= require momentjs
+//= require humanize-duration
+//= require angular-timer
 //= require app
 //= require_tree .
 //= require websocket_rails/main
-
-

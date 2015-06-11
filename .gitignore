@@ -22,6 +22,3 @@
 bower.json
 
 /node_modules
-
-# Ignore sublime project files
-*.sublime-*
