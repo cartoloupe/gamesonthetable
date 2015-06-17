@@ -3,5 +3,3 @@ $(document).ready(function() {
   console.log('from game.js');
   //$( ".draggable" ).draggable();
 });
-
-

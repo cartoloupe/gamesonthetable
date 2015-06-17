@@ -1,14 +1,28 @@
 // (function(ng) {
-  var movesApp = angular.module("moves", ['Devise'])
+
+
+
+  var movesApp = angular.module("moves", ['Devise', 'timer'])
   movesApp.run(function() {
     //console.log('movesApp');
 
   });
+
   movesApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.common['X-CSRF-Token'] =
       $('meta[name=csrf-token]').attr('content')
   }]);
 
+  // (I think) This code creates a service constructor named
+  // "dispatcher." This service, when invoked:
+  //
+  // 1. Uses WebSocketRails to opens and subscribes to a channel.
+  // 2. Add a function that is invoked when a channel is opened.
+  // 3. Returns an instance of Dispatcher that has the following functions:
+  //    * bind(channelName, eventName, callBack)
+  //    * trigger()
+  //
+  //
 
   movesApp.service('dispatcher', ['$rootScope', function($rootScope) {
     var dispatcher = new WebSocketRails(window.location.host + '/websocket');
@@ -36,6 +50,30 @@
     }
     return new Dispatcher();
   }]);
+
+  // This code creates a factory that is used in the MoveController below. The
+  // factory can create a service called MoveResource that has the following
+  // functionality:
+  //
+  // Has an instance variable (or is it a data type?) called number_of_moves. This
+  // number_of_moves is the value that of the move. +5, -10, etc.
+  //
+  // Has a method called "all" that gets all moves from the server. This method calls
+  // a callback function on successful retrieval of the moves.
+  //
+  // Has a method called "onCreate" that uses the dispatcher service (above) to
+  // connect a websocket channel to handler. I.E. if we receive a message from the
+  // server, the handler, which is a passed in function, gets invoked.
+  //
+  // Has a function called "save" that saves the moves to the server. (It sends the entire
+  // list of moves?)
+  //
+  // Has a function called "destroy" which sends a websocket moves.destroy to the server.
+  //
+  // Only the destroy function seems to use websockets.
+  //
+  // Why didn't we just use ngResource? It doesn't have websockets functionality, but
+  // what do we want to use that for?
 
   movesApp.factory('MoveResource', ['$http', 'dispatcher', function($http, dispatcher) {
     var MoveResource = function(number_of_moves) {
@@ -84,9 +122,11 @@
     return MoveResource;
   }])
 
-
+  // This code creates the moves controller, which is used in game.html.erb
   movesApp.controller('MovesController', ['MoveResource', '$scope', function(MoveResource, $scope) {
     //console.log(MoveResource);
+
+    // Get all of the moves from the server. Just a regular http get.
     MoveResource.all(function(moves) {
       //console.log("success");
       $scope.moves = moves;

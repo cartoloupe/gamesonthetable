@@ -16,8 +16,11 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# Had to use rails assets rather than this Gem. See http://nithinbekal.com/posts/rails-assets-jquery/
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -27,13 +30,24 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
 gem 'angular_rails_csrf'
+
 source "https://rails-assets.org" do
-  gem "rails-assets-angular-devise"
+  gem 'rails-assets-angular-devise'
+  gem 'rails-assets-jquery-countdown'          # https://github.com/rendro/countdown
+  gem 'rails-assets-angular-timer'
+  gem 'rails-assets-humanize-duration'
+  gem 'rails-assets-momentjs'
+
+  # Had to use rails assets rather than this Gem. See http://nithinbekal.com/posts/rails-assets-jquery/
+  # gem 'rails-assets-jquery'
+  # gem 'rails-assets-jquery-ujs'
 end
 
 gem 'high_voltage', '~> 2.3.0'
 gem 'sexp_processor', '~> 4.5.1'
-gem 'simple_enum'
+
+gem 'less-rails'
+gem 'railsstrap'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
