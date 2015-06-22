@@ -16,7 +16,8 @@ set :repository, 'https://github.com/cartoloupe/gamesonthetable.git'
 set :branch, 'deploy'
 
 # For system-wide RVM install.
-#   set :rvm_path, '/usr/local/rvm/bin/rvm'
+# set :rvm_path, '/usr/local/rvm/scripts/rvm'
+
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
@@ -27,6 +28,7 @@ set :shared_paths, ['config/database.yml', 'log']
 #   set :port, '30000'     # SSH port number.
 #   set :forward_agent, true     # SSH forward_agent.
 set :user, 'deployer'
+set :term_mode, nil   # https://github.com/mina-deploy/mina/issues/99
 set :port, '22'
 
 # This task is the environment that is loaded for most commands, such as
@@ -34,10 +36,10 @@ set :port, '22'
 task :environment do
   # If you're using rbenv, use this to load the rbenv environment.
   # Be sure to commit your .ruby-version or .rbenv-version to your repository.
-  # invoke :'rbenv:load'
+  invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use[ruby-2.2.1-p85@default]'
+  # invoke :'rvm:use[ruby-2.2.1@gott]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -64,6 +66,7 @@ task :deploy => :environment do
     # instance of your project.
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
+    queue! %[bundle config build.nokogiri --use-system-libraries]
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
