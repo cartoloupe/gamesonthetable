@@ -1,8 +1,8 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-# require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
-require 'mina/rvm'    # for rvm support. (http://rvm.io)
+require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
+# require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -11,7 +11,7 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :domain, '45.55.82.38'
-set :deploy_to, '/home/rails'
+set :deploy_to, '/var/www/gott'
 set :repository, 'https://github.com/cartoloupe/gamesonthetable.git'
 set :branch, 'deploy'
 
@@ -66,6 +66,7 @@ task :deploy => :environment do
     # instance of your project.
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
+    # queue! %[bundle config]
     queue! %[bundle config build.nokogiri --use-system-libraries]
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
