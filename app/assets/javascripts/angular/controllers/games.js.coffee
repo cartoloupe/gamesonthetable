@@ -46,3 +46,8 @@ movesApp.controller 'GamesCtrl', ['$scope', '$http', 'dispatcher', ($scope, $htt
 		$scope.getGames()
 	)
 ]
+
+
+
+$(document).ready ->
+  $('#datetimepicker1').datetimepicker()
