@@ -22,3 +22,4 @@
 bower.json
 
 /node_modules
+.bundle

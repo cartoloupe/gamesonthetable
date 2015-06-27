@@ -5,21 +5,30 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
   pool: 5
-  timeout: 5000
+  encoding: unicode
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: gott_development
+  username: todd
+  password: password
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: gott_test
+  username: todd
+  password: password
+
+# Warning: This is unsecure as it'll be stored in plain sight on Github.
+# We'll have to change to something more spiffy in deployment.
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: gott
+  username: rails
+  password: <%= ENV['APP_DATABASE_PASSWORD'] %>

@@ -1,3 +1,6 @@
+require 'chronic'
+
+
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
@@ -24,7 +27,11 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    @game = Game.new(game_params)
+
+    params = game_params.to_h
+    params["end_time"]= Chronic.parse(params["end_time"]).to_s    # Gotta use the string. Evidently .to_h doesn't create a hash with indifferent access
+
+    @game = Game.new(params)
 
     respond_to do |format|
       if @game.save

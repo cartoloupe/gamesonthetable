@@ -1,4 +1,9 @@
 source 'https://rubygems.org'
+# ruby "2.1.2"
+#
+# gem 'rails_12factor', group: :production
+
+gem 'mina'
 
 gem 'haml-rails'
 gem 'websocket-rails'
@@ -48,6 +53,8 @@ gem 'sexp_processor', '~> 4.5.1'
 
 gem 'less-rails'
 gem 'railsstrap'
+gem 'chronic'
+gem 'browser-timezone-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -71,6 +78,6 @@ group :development, :test do
   gem 'spring', '~> 1.3.6'
 end
 
-group :production do
+# group :production do
   gem 'pg'
-end
+# end
