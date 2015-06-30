@@ -34,8 +34,13 @@
           <span>{{user}}</span>
         </li>
       </ul>
-    </div>
+      <div ng-controller='MovesController'>
+        <svg class="draggable" height='200' width='200'>
+          <circle cx={{circle_cx}} cy='150' fill='red' r='20'></circle>
+        </svg>
+      </div>
 
+    </div>
   </div>
 
   <div class="row">
@@ -70,10 +75,6 @@
         <p>NewMove= {{newMove}}</p>
         <p>Number_of_moves= {{move.number_of_moves}}</p>
       </div>
-
-      <svg class="draggable" height='200' width='200'>
-        <circle cx='150' cy='150' fill='red' r='20'></circle>
-      </svg>
 
       <h5>
         Seems that this code uses regular javascript in moves.js
