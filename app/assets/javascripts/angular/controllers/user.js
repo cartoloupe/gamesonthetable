@@ -10,7 +10,6 @@ movesApp.controller('UserController', ['$scope', 'Auth', 'dispatcher', function(
   $scope.current_users = [];
 
   $scope.getUser = function() {
-    //console.log("getting user");
 
     Auth.currentUser().then(function(user) {
       // User was logged in, or Devise returned
@@ -31,12 +30,17 @@ movesApp.controller('UserController', ['$scope', 'Auth', 'dispatcher', function(
   }
 
   dispatcher.bind('user', 'logged_in', function(user) {
-    console.log("user logged_in: " + user.email);
-
     // only add user to current_users if they don't already exist
     if ($scope.current_users.indexOf(user.email) == -1){
       $scope.current_users.push(user.email);
     }
+    console.log('user logged_in from user.js');
   });
+
+  dispatcher.bind('moves', 'reddot', function(user) {
+    console.log("moves reddot from user.js");
+    console.log(user);
+  });
+
 
 }]);
