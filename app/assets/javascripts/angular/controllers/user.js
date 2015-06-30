@@ -37,10 +37,4 @@ movesApp.controller('UserController', ['$scope', 'Auth', 'dispatcher', function(
     console.log('user logged_in from user.js');
   });
 
-  dispatcher.bind('moves', 'reddot', function(user) {
-    console.log("moves reddot from user.js");
-    console.log(user);
-  });
-
-
 }]);
