@@ -5,10 +5,6 @@ movesApp.controller 'MovesController', [
   'dispatcher'
   (MoveResource, $scope, dispatcher) ->
 
-    dispatcher.bind 'moves', 'reddot', (coordinate) ->
-      console.log 'moves reddot from game.js.coffee'
-      console.log coordinate
-
     # Get all of the moves from the server. Just a regular http get.
     MoveResource.all (moves) ->
       $scope.moves = moves
@@ -29,17 +25,26 @@ movesApp.controller 'MovesController', [
       $scope.newMove.destroy()
       return
 
+    $scope.circle_cx = 150;
+
     $('.another-move').on 'click', (d, i) ->
       a = $('.another-move').text()
       delta = parseInt(a)
       submitMove parseInt(a)
       circle = $('svg circle')
       circle_cx = parseInt(circle.attr('cx'))
-      circle.attr 'cx', circle_cx + delta
+      new_circle_cx = circle_cx + delta
+      circle.attr 'cx', new_circle_cx
       circle.remove()
       $('svg').append circle
-      dispatcher.trigger 'moves.moving', cx: circle_cx
+      dispatcher.trigger 'moves.moving', cx: new_circle_cx
+      $scope.circle_cx = new_circle_cx;
       return
+
+    dispatcher.bind 'moves', 'reddot', (coordinate) ->
+      console.log 'moves reddot from game.js.coffee'
+      console.log coordinate
+      $scope.circle_cx = coordinate
 
     return
 ]
