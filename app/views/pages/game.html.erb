@@ -19,6 +19,13 @@
       <p>Current user (retrieved with erb) is <%= current_user.email %></p>
       <p>Current user (retrieved with Angular) is {{current_user}}</p>
       <button ng-click='getUser()'>getUser</button>
+      <button
+        class='another-move'
+        ng-model='newMove.number_of_moves'
+        ng-submit='saveMove()'
+        >
+        3
+      </button>
 
       <br>
       <h3>Other Users</h3>
