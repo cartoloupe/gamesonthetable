@@ -1,40 +1,27 @@
 .row
 	.col-sm-12
-		%H1 Select a Game
+		- if user_signed_in?
+			%H1 Select a Game to play
 
-		#moves{"ng-controller" => "GamesCtrl"}
-			%table.table
-				%tr
-					%th Name
-					%th Time Remaining
-					%th End Time
-					%th Number of Users
-					%th Status code
-					%th Join?
-				%tr{"ng-repeat" => "game in games", "ng-init" => "mytime = game.end_time_ms"}
-					%td {{game.name}}
-					%td <timer end-time="mytime">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds</timer>
-					%td {{game.end_time}}
-					%td {{game.num_users}}
-					%td {{game.status}}
-					%td link
-
-			%br
-
-			%button{"ng-click" => 'getGames()'}
-				getGames
-
--# %br
--#
--# %button{"ng-click" => 'setTimers()'}
--# 	setTimer
-
-// :javascript
-// 	$('.countdown').countdown({
-// 	    digits: 10,
-// 	    number: 12345678,
-// 	    duration: 20000000,
-// 	    animateTo: 0
-// 	});
-
-// "ngc-done" => "'scope.setTimers'"
+			#moves{"ng-controller" => "GamesController"}
+				%table.table
+					%tr
+						%th Name
+						%th Time Remaining
+						%th (Max) Number of Users
+						%th Current number of users
+						%th Status code
+						%th Already part of game?
+						%th Join?
+					%tr{"ng-repeat" => "game in games", "ng-init" => "mytime = game.end_time_ms"}
+						%td {{game.name}}
+						%td <timer end-time="mytime">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds</timer>
+						%td {{game.num_users}}
+						%td {{game.curr_num_users}}
+						%td {{game.status}}
+						%td {{game.in_game}}
+						%td
+							%a{"ng-href" => "/players/join?game_id={{game.id}}"}
+								Join Game
+		- else
+			= link_to "Login", new_user_session_path, class: "btn btn-primary btn-lg"

@@ -45,15 +45,15 @@ logger.debug
 
 ### how to use helper in controller
 ```ruby
-class SessionsController
-  include SessionsHelper
+class PlayersController
+  include PlayersHelper
 ```
-given `app/helpers/sessions_helper.rb`:
+given `app/helpers/players_helper.rb`:
 ```ruby
-module SessionsHelper
+module PlayersHelper
   # logs in the given user
   def log_in(user)
-    session[:user_id] = user.id
+    player[:user_id] = user.id
   end
 end
 ```

@@ -42,6 +42,8 @@ source "https://rails-assets.org" do
   gem 'rails-assets-angular-timer'
   gem 'rails-assets-humanize-duration'
   gem 'rails-assets-momentjs'
+  gem 'rails-assets-angular-mocks'
+  gem 'rails-assets-angular-resource'
 
   # Had to use rails assets rather than this Gem. See http://nithinbekal.com/posts/rails-assets-jquery/
   # gem 'rails-assets-jquery'
@@ -74,8 +76,13 @@ group :development, :test do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
+  gem 'quiet_assets'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 1.3.6'
+
+  gem 'jasmine-rails'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
 end
 
 # group :production do

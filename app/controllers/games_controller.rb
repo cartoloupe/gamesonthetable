@@ -3,7 +3,8 @@ require 'chronic'
 
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
+  
   # GET /games
   # GET /games.json
   def index

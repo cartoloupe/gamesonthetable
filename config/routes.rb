@@ -1,18 +1,21 @@
 Rails.application.routes.draw do
+
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+  resources :players do
+    get 'join', on: :collection    
+  end
+
   resources :games
 
   resources :moves
   devise_for :users
 
-  get 'login' => 'sessions#new'
-  post 'login' => 'sessions#create'
-  delete 'login' => 'sessions#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'sessions#new'
+  root 'high_voltage/pages#show', id: 'select_game'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

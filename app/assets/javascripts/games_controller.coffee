@@ -18,31 +18,37 @@
 #
 # 2. How do we want to work websockets into our controllers? I.E. if we are using
 # ngResource, what would we need websockets for?
+#
+# Old $http version
+# $scope.games = []
+#
+# $scope.getGames = () ->
+# 	$http.get('/games.json').success (data) ->
+# 		console.log "Success"
+# 		console.log JSON.stringify(data)
+# 		$scope.games = data
+# 		return
+#
+# 	return
 
+movesApp.controller 'GamesController', ['$scope', '$http', 'dispatcher', 'Game', ($scope, $http, dispatcher, Game) ->
 
-movesApp.controller 'GamesCtrl', ['$scope', '$http', 'dispatcher', ($scope, $http, dispatcher) ->
-	$scope.games = []
+	$scope.load = ->
+	  $scope.games = Game.query()
 
-	$scope.getGames = () ->
-		$http.get('/games.json').success (data) ->
-			console.log "Success"
-			console.log JSON.stringify(data)
-			$scope.games = data
-			return
+	$scope.addGame = (data) ->
+	  Game.save data, (game) ->
+	    $scope.games.push(new Game(game))
+	    $scope.game = new Game()
 
-	# $scope.setTimers = () ->
-	# 	# $('timer')[0].stop();
-	# 	console.log "Setting timers"
-	# 	x = angular.element($('timer')[0]);
-	# 	x.attr('endTimeAttr', '67236450052');
-	# 	# $('timer')[0].setCountdown(300);
-	# 	$('timer')[0].start();
+	$scope.completeGame = (game) ->
+	  game.completed_at = new Date()
+	  game.$update {}, ->
+	    $scope.games.remove(game)
 
-		return
+	$scope.load()
 
-
-	$scope.getGames()		# Get initial list of games
 	dispatcher.bind('games', 'reload', (data) ->
-		$scope.getGames()
+		$scope.load()
 	)
 ]
