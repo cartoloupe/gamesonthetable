@@ -45,6 +45,7 @@ class PlayersController < ApplicationController
           format.html { redirect_to game, notice: "Successfully joined game." }
         else
           format.html { render :new }
+          format.html { redirect_to game, notice: "Couldn't join game." }
         end
 
       else

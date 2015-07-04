@@ -8,6 +8,22 @@ a table on which there are games
  - [ ] the game should involve simultaneous input, not necessarily real-time
  - [ ] the game should update each player's displays via angular's reactive models
 
+## Testing
+
+Currently, we support two kinds of testing: rails testing with minitest and
+angular testing with jasmine. Plans are to add protractor for e2e testing.
+
+
+For minitest, the test suite is located in the test subdirectory. For jasmine, the test suite is located in the spec subdirectory.
+
+To run tests use guard:
+
+`bundle exec guard`
+
+Note, to manually run the jasmine tests, you can use:
+
+`RAILS_ENV=test bundle exec rake spec:javascript`
+
 
 ## setup
 1. set up assets: `bundle exec rake bower:install`
@@ -17,7 +33,7 @@ a table on which there are games
 ## websockets
 - [websocket-rails](https://github.com/websocket-rails/websocket-rails)
   - http://webchat.freenode.net/#websocket-rails
-  - [moaa/websocket-rails-demo](https://github.com/moaa/websocket-rails-demo) 
+  - [moaa/websocket-rails-demo](https://github.com/moaa/websocket-rails-demo)
 
 ## authentication with rails and angular
 - [angular_devise](https://github.com/cloudspace/angular_devise)

@@ -36,6 +36,21 @@ movesApp.controller 'GamesController', ['$scope', '$http', 'dispatcher', 'Game',
 	$scope.load = ->
 	  $scope.games = Game.query()
 
+	# $scope.joinGame = (event) ->
+	# 	console.log "In joinGame"
+	# 	# console.log JSON.stringify(event)
+	# 	data = JSON.stringify({game_id: "1"})
+	# 	console.log data
+	# 	$http.post("/players/join", data).success((data, status) ->
+	# 		console.log "In success"
+	# 		# console.log JSON.stringify(data)
+	# 		# console.log JSON.stringify(status)
+	# 		return
+	# 	).error (resp) ->
+	# 		console.log JSON.stringify(resp)
+	# 		return
+	# 	return
+
 	$scope.addGame = (data) ->
 	  Game.save data, (game) ->
 	    $scope.games.push(new Game(game))

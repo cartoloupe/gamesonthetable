@@ -69,7 +69,6 @@ gem 'browser-timezone-rails'
 
 
 group :development, :test do
-  gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-rails'
@@ -81,8 +80,14 @@ group :development, :test do
   gem 'spring', '~> 1.3.6'
 
   gem 'jasmine-rails'
-  gem 'factory_girl_rails'
-  gem 'rspec-rails'
+
+  gem 'guard'
+  gem 'guard-minitest'
+  gem 'guard-jasmine' # Note that phantomjs needs to be installed: https://github.com/guard/guard-jasmine
+  gem 'minitest'
+  gem 'minitest-reporters'
+
+  gem 'awesome_print'
 end
 
 # group :production do

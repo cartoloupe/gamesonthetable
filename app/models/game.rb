@@ -2,7 +2,7 @@ class Game < ActiveRecord::Base
 	# as_enum :status, open: 0, forming: 1, closed: 2
 	# # as_enum is a feature of the simple_enum gem (I'm lazy)
 
-	has_many :players
+	has_many :players, dependent: :destroy
 
 	def end_time_ms
 		(end_time.to_f * 1000).to_i

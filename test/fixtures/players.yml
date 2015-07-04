@@ -1,13 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Player one
   comment: MyString
-  user_id: 
-  game_id: 
+  user: one
+  game: one
 
 two:
-  name: MyString
+  name: Player two
   comment: MyString
-  user_id: 
-  game_id: 
+  user: two
+  game: one
+
+three:
+  name: Player one again
+  comment: MyString
+  user: one
+  game: two

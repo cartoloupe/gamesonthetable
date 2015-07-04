@@ -21,7 +21,9 @@
 						%td {{game.status}}
 						%td {{game.in_game}}
 						%td
-							%a{"ng-href" => "/players/join?game_id={{game.id}}"}
+							%a.btn.btn-default{"ng-href" => "/players/join?game_id={{game.id}}"}
 								Join Game
+
+			-# Was {:href => "", "ng-click" => "joinGame($event)"}
 		- else
 			= link_to "Login", new_user_session_path, class: "btn btn-primary btn-lg"
