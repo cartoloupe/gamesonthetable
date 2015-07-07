@@ -26,8 +26,10 @@ movesApp.controller 'MovesController', [
       return
 
     $scope.circle_cx = 150;
+    $scope.circle_cy = 150;
 
     $('.another-move').on 'click', (d, i) ->
+      console.log([d,i])
       a = $('.another-move').text()
       delta = parseInt(a)
       submitMove parseInt(a)
