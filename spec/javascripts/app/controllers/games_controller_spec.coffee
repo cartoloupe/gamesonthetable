@@ -16,7 +16,7 @@ describe 'GamesController', ->
   it 'loads an initial list of games', ->
     expect(@scope.games.length).toBe(2)
 
-  it 'can add games', ->
+  xit 'can add games', ->
     @http.whenPOST('/games.json').respond(200)
     @scope.addGame()
     expect(@scope.games.length).toBe(3)
