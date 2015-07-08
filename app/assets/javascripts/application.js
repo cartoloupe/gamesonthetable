@@ -19,12 +19,13 @@
 //= require bootstrap/dist/js/bootstrap
 //= require angular
 //= require angular-devise
+//= require angular-resource
 //= require datepicker/datepicker
 //= require jquery-countdown
 //= require momentjs
 //= require humanize-duration
 //= require angular-timer
-//= require app
+//= require movesapp
 //= require_tree .
 //= require websocket_rails/main
 //= require jquery.cookie

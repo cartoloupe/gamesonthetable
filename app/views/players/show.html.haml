@@ -1,0 +1,22 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @player.name
+%p
+  %b Comment:
+  = @player.comment
+%p
+  %b Game_id this player belongs to
+  = @player.game_id
+
+%p
+  %b User_id this player belongs to
+  = @player.user_id
+
+
+= link_to 'Go to the Game',game_path(id: @player.game_id)
+\|
+= link_to 'Edit', edit_player_path(@player)
+\|
+= link_to 'Back', players_path

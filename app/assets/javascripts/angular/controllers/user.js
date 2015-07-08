@@ -14,7 +14,7 @@ movesApp.controller('UserController', ['$scope', 'Auth', 'dispatcher', function(
 
     Auth.currentUser().then(function(user) {
       // User was logged in, or Devise returned
-      // previously authenticated session.
+      // previously authenticated player.
       //console.log(user.email); // => {id: 1, ect: '...'}
       $scope.current_user = user.email;
 

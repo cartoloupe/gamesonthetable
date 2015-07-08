@@ -5,7 +5,8 @@
     %tr
       %th Name
       %th End Time
-      %th Num users
+      %th (Max) Num users
+      %th Players
       %th Status
       %th
       %th
@@ -17,6 +18,7 @@
         %td= game.name
         %td= game.end_time.strftime("%d %b %Y - %l:%M:%S %p %Z") unless game.end_time.nil?
         %td= game.num_users
+        %td= game.players.count
         %td= game.status
         %td= link_to 'Show', game
         %td= link_to 'Edit', edit_game_path(game)

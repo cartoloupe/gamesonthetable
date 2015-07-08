@@ -26,7 +26,7 @@ Devise.setup do |config|
   # just :email. You can configure it to use [:username, :subdomain], so for
   # authenticating a user, both parameters are required. Remember that those
   # parameters are used only when authenticating and not when retrieving from
-  # session. If you need permissions, you should implement that in a before filter.
+  # player. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
   # config.authentication_keys = [ :email ]
@@ -72,11 +72,11 @@ Devise.setup do |config|
   # Does not affect registerable.
   # config.paranoid = true
 
-  # By default Devise will store the user in session. You can skip storage for
+  # By default Devise will store the user in player. You can skip storage for
   # particular strategies by setting this option.
   # Notice that if you are skipping storage for all authentication paths, you
-  # may want to disable generating routes to Devise's sessions controller by
-  # passing skip: :sessions to `devise_for` in your config/routes.rb
+  # may want to disable generating routes to Devise's players controller by
+  # passing skip: :players to `devise_for` in your config/routes.rb
   config.skip_session_storage = [:http_auth]
 
   # By default, Devise cleans up the CSRF token on authentication to
@@ -148,11 +148,11 @@ Devise.setup do |config|
   # config.email_regexp = /\A[^@]+@[^@]+\z/
 
   # ==> Configuration for :timeoutable
-  # The time you want to timeout the user session without activity. After this
+  # The time you want to timeout the user player without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
   # config.timeout_in = 30.minutes
 
-  # If true, expires auth token on session timeout.
+  # If true, expires auth token on player timeout.
   # config.expire_auth_token_on_timeout = false
 
   # ==> Configuration for :lockable
@@ -202,8 +202,8 @@ Devise.setup do |config|
   # config.encryptor = :sha512
 
   # ==> Scopes configuration
-  # Turn scoped views on. Before rendering "sessions/new", it will first check for
-  # "users/sessions/new". It's turned off by default because it's slower if you
+  # Turn scoped views on. Before rendering "players/new", it will first check for
+  # "users/players/new". It's turned off by default because it's slower if you
   # are using only default views.
   # config.scoped_views = false
 

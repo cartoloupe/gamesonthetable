@@ -1,8 +1,6 @@
 // (function(ng) {
 
-
-
-  var movesApp = angular.module("moves", ['Devise', 'timer'])
+  var movesApp = angular.module("movesApp", ['Devise', 'timer', 'ngResource'])
   movesApp.run(function() {
     //console.log('movesApp');
 

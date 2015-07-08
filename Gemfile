@@ -42,6 +42,8 @@ source "https://rails-assets.org" do
   gem 'rails-assets-angular-timer'
   gem 'rails-assets-humanize-duration'
   gem 'rails-assets-momentjs'
+  gem 'rails-assets-angular-mocks'
+  gem 'rails-assets-angular-resource'
 
   # Had to use rails assets rather than this Gem. See http://nithinbekal.com/posts/rails-assets-jquery/
   # gem 'rails-assets-jquery'
@@ -67,15 +69,25 @@ gem 'browser-timezone-rails'
 
 
 group :development, :test do
-  gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-rails'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
+  gem 'quiet_assets'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 1.3.6'
+
+  gem 'jasmine-rails'
+
+  gem 'guard'
+  gem 'guard-minitest'
+  gem 'guard-jasmine' # Note that phantomjs needs to be installed: https://github.com/guard/guard-jasmine
+  gem 'minitest'
+  gem 'minitest-reporters'
+
+  gem 'awesome_print'
 end
 
 # group :production do
