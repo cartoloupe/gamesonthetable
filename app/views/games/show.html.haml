@@ -1,18 +1,37 @@
-%p#notice= notice
+.row
+  .col-sm-12
+    %p#notice= notice
 
-%p
-  %b Name:
-  = @game.name
-%p
-  %b End time:
-  = @game.end_time
-%p
-  %b Num users:
-  = @game.num_users
-%p
-  %b Status:
-  = @game.status
+.row
+  .col-sm-9
+    %p
+      %b Name:
+      = @game.name
+    %p
+      %b End time:
+      = @game.end_time
+    %p
+      %b (Max) Num users:
+      = @game.num_users
+    %p
+      %b Status:
+      = @game.status
+  .col-sm-3
+    #users{"ng-controller" => "PlayersCtrl"}
+      %h5 Players
+      %table.table
+        %thead
+          %tr
+            %th ID
+            %th Name
+        %tbody
+          %tr{"ng-repeat" => "player in players"}
+            %td {{player.id}}
+            %td {{player.user_name}}
+.row
+  .col-sm-12
+    %p REFER TO A PARTIAL TO PULL IN THE ANGULAR HTML TO DO A GAME
 
-= link_to 'Edit', edit_game_path(@game)
-\|
-= link_to 'Back', games_path
+    = link_to 'Edit', edit_game_path(@game)
+    \|
+    = link_to 'Back', games_path

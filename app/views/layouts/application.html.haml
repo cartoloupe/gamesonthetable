@@ -1,7 +1,7 @@
 / Why do we want to have multiple angular apps in our page. Especially the layout page?
 / For now, I'm going to only have one module (moves) and place it at the html element
 !!!
-%html{"ng-app" => "moves"}
+%html{"ng-app" => "movesApp"}
   %head
     %title Gonthet
     = stylesheet_link_tag    'application', media: 'all'
@@ -39,7 +39,7 @@
             %ul.nav.navbar-nav.navbar-right
               - if user_signed_in?
                 - params[:from_controller] = controller.controller_name
-                %li= link_to "Current Game", page_path('game')                
+                %li= link_to "Current Game", page_path('game')
                 %li= link_to "Select a game", page_path('select_game')
                 %li= link_to "Master list of games", games_path
                 %li.dropdown#drop1

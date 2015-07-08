@@ -23,3 +23,6 @@ bower.json
 
 /node_modules
 .bundle
+
+# Don't include Mac Desktop Services Store files
+.DS_store
