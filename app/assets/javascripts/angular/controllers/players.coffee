@@ -7,28 +7,28 @@
 #
 
 movesApp.controller 'PlayersCtrl', ['$scope', '$http', 'dispatcher', ($scope, $http, dispatcher) ->
-	$scope.players = []
+  $scope.players = []
 
-	$scope.getPlayers = () ->
+  $scope.getPlayers = () ->
 
-		# Note that we don't want to use the Angular $location because that's for working
-		# with Angular paths. We're not using that (at the moment). So, we'll use the
-		# jquery get the path.
+    # Note that we don't want to use the Angular $location because that's for working
+    # with Angular paths. We're not using that (at the moment). So, we'll use the
+    # jquery get the path.
 
-		# Get the game id
-		g_id =  $(location).attr('pathname').split('/')[2];
+    # Get the game id
+    g_id =  $(location).attr('pathname').split('/')[2];
 
-		$http.get('/players.json?game_id='+g_id).success (data) ->
-			console.log "Successfully retrieved players"
-			console.log JSON.stringify(data)
-			$scope.players = data
-			return
+    $http.get('/players.json?game_id='+g_id).success (data) ->
+      console.log "Successfully retrieved players"
+      console.log JSON.stringify(data)
+      $scope.players = data
+      return
 
-		return
+    return
 
-	$scope.getPlayers()		# Get initial list of players
+  $scope.getPlayers()    # Get initial list of players
 
-	dispatcher.bind('players', 'reload', (data) ->
-		$scope.getPlayers()
-	)
+  dispatcher.bind('players', 'reload', (data) ->
+    $scope.getPlayers()
+  )
 ]

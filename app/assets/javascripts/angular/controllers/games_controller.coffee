@@ -9,8 +9,8 @@
 #
 # Don't need to (these are done using other regular rails activities):
 #
-#		Create or delete a game.
-#		Edit a game.
+#    Create or delete a game.
+#    Edit a game.
 #
 # Philosphical question:
 # 1. Should we mix and match regular Rails with angular? I.E. should we use
@@ -23,47 +23,47 @@
 # $scope.games = []
 #
 # $scope.getGames = () ->
-# 	$http.get('/games.json').success (data) ->
-# 		console.log "Success"
-# 		console.log JSON.stringify(data)
-# 		$scope.games = data
-# 		return
+#   $http.get('/games.json').success (data) ->
+#     console.log "Success"
+#     console.log JSON.stringify(data)
+#     $scope.games = data
+#     return
 #
-# 	return
+#   return
 
 movesApp.controller 'GamesController', ['$scope', '$http', 'dispatcher', 'Game', ($scope, $http, dispatcher, Game) ->
 
-	$scope.load = ->
-	  $scope.games = Game.query()
+  $scope.load = ->
+    $scope.games = Game.query()
 
-	# $scope.joinGame = (event) ->
-	# 	console.log "In joinGame"
-	# 	# console.log JSON.stringify(event)
-	# 	data = JSON.stringify({game_id: "1"})
-	# 	console.log data
-	# 	$http.post("/players/join", data).success((data, status) ->
-	# 		console.log "In success"
-	# 		# console.log JSON.stringify(data)
-	# 		# console.log JSON.stringify(status)
-	# 		return
-	# 	).error (resp) ->
-	# 		console.log JSON.stringify(resp)
-	# 		return
-	# 	return
+  # $scope.joinGame = (event) ->
+  #   console.log "In joinGame"
+  #   # console.log JSON.stringify(event)
+  #   data = JSON.stringify({game_id: "1"})
+  #   console.log data
+  #   $http.post("/players/join", data).success((data, status) ->
+  #     console.log "In success"
+  #     # console.log JSON.stringify(data)
+  #     # console.log JSON.stringify(status)
+  #     return
+  #   ).error (resp) ->
+  #     console.log JSON.stringify(resp)
+  #     return
+  #   return
 
-	$scope.addGame = (data) ->
-	  Game.save data, (game) ->
-	    $scope.games.push(new Game(game))
-	    $scope.game = new Game()
+  $scope.addGame = (data) ->
+    Game.save data, (game) ->
+      $scope.games.push(new Game(game))
+      $scope.game = new Game()
 
-	$scope.completeGame = (game) ->
-	  game.completed_at = new Date()
-	  game.$update {}, ->
-	    $scope.games.remove(game)
+  $scope.completeGame = (game) ->
+    game.completed_at = new Date()
+    game.$update {}, ->
+      $scope.games.remove(game)
 
-	$scope.load()
+  $scope.load()
 
-	dispatcher.bind('games', 'reload', (data) ->
-		$scope.load()
-	)
+  dispatcher.bind('games', 'reload', (data) ->
+    $scope.load()
+  )
 ]
