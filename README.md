@@ -29,6 +29,13 @@ Note, to manually run the jasmine tests, you can use:
 1. set up assets: `bundle exec rake bower:install`
 1. run the server: `bundle exec rails server`
 
+### DB setup
+```bash
+bundle exec rake db:create
+bundle exec rake db:setup
+bundle exec rake db:migrate
+```
+
 # resources
 ## websockets
 - [websocket-rails](https://github.com/websocket-rails/websocket-rails)
