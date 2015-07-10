@@ -29,6 +29,9 @@ movesApp.controller('UserController', ['$scope', 'Auth', 'dispatcher', function(
     });
   }
 
+  // calling getUser here to load user on pageload
+  $scope.getUser();
+
   dispatcher.bind('user', 'logged_in', function(user) {
     // only add user to current_users if they don't already exist
     if ($scope.current_users.indexOf(user.email) == -1){
