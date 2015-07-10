@@ -1,0 +1,46 @@
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<div id='user_info' ng-controller='UserController'>
+
+  <br>
+  <div class="row">
+
+    <div class="col-md-3 pull-left">
+      <h3>User Information</h3>
+      <p>Current user: {{current_user}}</p>
+      <button ng-click='getUser()'>getUser</button>
+      <button
+        class='another-move'
+        ng-model='newMove.number_of_moves'
+        ng-submit='saveMove()'
+        >
+        3
+      </button>
+
+      <br>
+      <h3>At this table:</h3>
+      <ul class="">
+        <li ng-repeat="user in current_users">
+          <span>{{user}}</span>
+        </li>
+      </ul>
+      <div ng-controller='MovesController'>
+        <svg height='500' width='500' style="position: relative; {{svg_style}}">
+        <circle cx={{circle_cx}} cy={{circle_cy}} fill='red' r='20'></circle>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="guesses col-md-4">
+      <p>guesses</p>
+      <ul>
+        <li>user_1: 4</li>
+        <li>user_3: 6</li>
+        <li>user_2: 11</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
