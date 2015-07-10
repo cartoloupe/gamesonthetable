@@ -2,14 +2,13 @@ Rails.application.routes.draw do
 
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   resources :players do
-    get 'join', on: :collection    
+    get 'join', on: :collection
   end
 
   resources :games
 
   resources :moves
   devise_for :users
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

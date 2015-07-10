@@ -11,6 +11,11 @@ movesApp.controller 'MovesController', [
       $scope.circle_cx = coordinate.cx
       $scope.circle_cy = coordinate.cy
 
+    dispatcher.bind 'moves', 'dragged', (style) ->
+      console.log 'moves dragged from game.coffee'
+      console.log style
+      $scope.svg_style = style
+
     # Get all of the moves from the server. Just a regular http get.
     MoveResource.all (moves) ->
       #console.log("success");
@@ -40,6 +45,17 @@ movesApp.controller 'MovesController', [
 
     $scope.circle_cx = 150;
     $scope.circle_cy = 150;
+    $scope.svg_style = "";
+
+    $('svg').draggable
+      stop: ->
+        svg = $('svg')
+        circle = $('svg circle')
+        style = svg.attr('style')
+        console.log 'style is'
+        console.log style
+        dispatcher.trigger 'moves.dragged', style
+        return
 
     $('.another-move').on 'click', (d, i) ->
       a = $('.another-move').text()
@@ -76,6 +92,7 @@ $(document).ready ->
   $('#submit-move').on 'click', ->
     submitMove $('#new-move').val()
     return
+
 
   return
 

@@ -39,7 +39,8 @@
             %ul.nav.navbar-nav.navbar-right
               - if user_signed_in?
                 - params[:from_controller] = controller.controller_name
-                %li= link_to "Current Game", page_path('game')
+                %li= link_to "Geodes", page_path('geodes')
+                %li= link_to "Bouncing Automotons", page_path('game')
                 %li= link_to "Select a game", page_path('select_game')
                 %li= link_to "Master list of games", games_path
                 %li.dropdown#drop1
