@@ -78,7 +78,7 @@ task :deploy => :environment do
     to :launch do
       # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
-      queue "rbenv sudo /etc/init.d/thin start"
+      queue "rbenv sudo /etc/init.d/thin restart"
     end
   end
 end

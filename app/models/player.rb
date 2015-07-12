@@ -7,6 +7,7 @@ class Player < ActiveRecord::Base
   validates :game, presence: true
 
   after_save :publish_reload_message
+  after_destroy :publish_reload_message
 
   def publish_reload_message
     WebsocketRails[:players].trigger 'reload', self
