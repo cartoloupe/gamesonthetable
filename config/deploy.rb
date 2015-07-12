@@ -13,7 +13,7 @@ require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 set :domain, '45.55.82.38'
 set :deploy_to, '/var/www/gott'
 set :repository, 'https://github.com/cartoloupe/gamesonthetable.git'
-set :branch, 'deploy'
+set :branch, 'master'
 
 # For system-wide RVM install.
 # set :rvm_path, '/usr/local/rvm/scripts/rvm'
@@ -21,7 +21,7 @@ set :branch, 'deploy'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log']
+set :shared_paths, ['config/database.yml', 'log', '.rbenv-vars']
 
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
@@ -69,13 +69,15 @@ task :deploy => :environment do
     # queue! %[bundle config]
     queue! %[bundle config build.nokogiri --use-system-libraries]
     invoke :'bundle:install'
+    queue! %[bundle install --binstubs .bundle/bin]
+    queue! %[rbenv rehash]
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
     to :launch do
       # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"      
+      # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
       queue "rbenv sudo /etc/init.d/thin start"
     end
   end

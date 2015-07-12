@@ -26,3 +26,7 @@ bower.json
 
 # Don't include Mac Desktop Services Store files
 .DS_store
+
+# Don't include the rbenv variables file. This is only on the development machine
+# to add in debugging.
+/.rbenv-vars

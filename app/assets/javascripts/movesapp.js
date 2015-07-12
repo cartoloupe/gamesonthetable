@@ -1,6 +1,6 @@
 // (function(ng) {
 
-  var movesApp = angular.module("movesApp", ['Devise', 'timer', 'ngResource'])
+  var movesApp = angular.module("movesApp", ['Devise', 'timer', 'ngResource']);
   movesApp.run(function() {
     //console.log('movesApp');
 
@@ -8,7 +8,7 @@
 
   movesApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.common['X-CSRF-Token'] =
-      $('meta[name=csrf-token]').attr('content')
+      $('meta[name=csrf-token]').attr('content');
   }]);
 
   // (I think) This code creates a service constructor named
@@ -27,7 +27,7 @@
     //console.log(dispatcher);
     dispatcher.on_open = function(data) {
       console.log('Connection has been established: ', data);
-    }
+    };
 
     var Dispatcher = function() {
       //    var createChannel = function (channelName) {
@@ -38,14 +38,14 @@
         channel.bind(eventName, function(data) {
           $rootScope.$apply(function() {
             callBack(data);
-          })
+          });
         });
       },
       this.trigger = function(channelName, someObject) {
         dispatcher.trigger(channelName, someObject);
-      }
+      };
 
-    }
+    };
     return new Dispatcher();
   }]);
 
@@ -73,10 +73,10 @@
   // Why didn't we just use ngResource? It doesn't have websockets functionality, but
   // what do we want to use that for?
 
-  movesApp.factory('MoveResource', ['$http', 'dispatcher', function($http, dispatcher) {
+  movesApp.factory('MoveResource', ['$http', 'dispatcher', '$resource', function($http, dispatcher, $resource) {
     var MoveResource = function(number_of_moves) {
       this.number_of_moves = number_of_moves;
-    }
+    };
 
     // var channel = dispatcher.subscribe('moves');
     // channel.bind('create', function(move) {
@@ -90,8 +90,8 @@
         });
         console.log(moves);
         successCallBack(moves);
-      })
-    }
+      });
+    };
 
     MoveResource.onCreate = function(handler) {
       dispatcher.bind('moves', 'create', function(moveData) {
@@ -102,7 +102,7 @@
         handler(move);
         // });
       });
-    }
+    };
 
     MoveResource.prototype.save = function(successCallBack) {
       console.log('saving moves');
@@ -118,6 +118,6 @@
 
 
     return MoveResource;
-  }])
+  }]);
 
 // })(angular);
