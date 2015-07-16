@@ -93,6 +93,22 @@ $(document).ready ->
     submitMove $('#new-move').val()
     return
 
+  width = 300
+  height = 300
+  radius = 20
+
+  dragmove = (d) ->
+    console.log('drag it')
+    d3.select(this).attr('cx', d.x = Math.max(radius, Math.min(width - radius, d3.event.x))).attr('cy', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
+    console.log('drag it')
+    return
+
+  drag = d3.behavior.drag().origin((d) -> d).on('drag', dragmove).on('dragstart', -> console.log('drasntart'))
+
+  svg = d3.select('body').append('div').selectAll('svg').data([{x: 150, y: 150}])
+    .enter().append('svg').attr('width', width).attr('height', height)
+
+  svg.append('circle').attr('r', radius).attr('cx', (d) -> d.x).attr('cy', (d) -> d.y).call(drag)
 
   return
 
