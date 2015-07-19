@@ -7,9 +7,22 @@ movesApp.controller 'MovesController', [
     $scope.circle_cx = 50;
     $scope.circle_cy = 50;
 
+    width = 300
+    height = 300
+    radius = 20
+
+    svg = d3.select('body .dotsection').append('div')
+        .attr('class', 'blacksection')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .style('border', '10px')
+        .style('border-style', 'solid')
+
+
     updatedot = (data) ->
       console.log ['updatedot: ', data]
-      dots = d3.select('.blacksection svg').selectAll('circle .blackdot')
+      dots = d3.select('.blacksection svg').selectAll('circle.blackdot')
         .data(data, (d) -> 0)
 
       dots
@@ -64,10 +77,6 @@ movesApp.controller 'MovesController', [
       $scope.newMove.destroy()
       return
 
-    width = 300
-    height = 300
-    radius = 20
-
     dragmove = (d) ->
       d3.select(this)
         .attr('cx', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
@@ -85,23 +94,7 @@ movesApp.controller 'MovesController', [
       .on('drag', dragmove)
       .on('dragend', dragEnd)
 
-    svg = d3.select('body .dotsection').append('div')
-        .attr('class', 'blacksection')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .style('border', '10px')
-        .style('border-style', 'solid')
-
-    svg.selectAll('circle.blackdot')
-      .data([{cx: 50, cy: 50}])
-      .enter()
-      .append('circle')
-      .attr('class', 'blackdot')
-      .attr('r', radius)
-      .attr('cx', (d) -> d.cx)
-      .attr('cy', (d) -> d.cy)
-      .call(drag)
+    updatedot([{cx: 150, cy: 150}])
 
     return
 ]
