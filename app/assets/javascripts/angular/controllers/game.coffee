@@ -4,17 +4,15 @@ movesApp.controller 'MovesController', [
   '$scope'
   'dispatcher'
   (MoveResource, $scope, dispatcher) ->
+    $scope.circle_cx = 50;
+    $scope.circle_cy = 50;
 
     dispatcher.bind 'moves', 'reddot', (coordinate) ->
-      console.log 'moves reddot from game.coffee'
-      console.log coordinate
+      console.log 'moves reddot from game.coffee:'
+      console.log [coordinate.cx, coordinate.cy]
       $scope.circle_cx = coordinate.cx
       $scope.circle_cy = coordinate.cy
-
-    dispatcher.bind 'moves', 'dragged', (style) ->
-      console.log 'moves dragged from game.coffee'
-      console.log style
-      $scope.svg_style = style
+      return
 
     # Get all of the moves from the server. Just a regular http get.
     MoveResource.all (moves) ->
@@ -43,8 +41,6 @@ movesApp.controller 'MovesController', [
       $scope.newMove.destroy()
       return
 
-    $scope.circle_cx = 150;
-    $scope.circle_cy = 150;
     $scope.svg_style = "";
 
     $('svg').draggable
@@ -52,9 +48,7 @@ movesApp.controller 'MovesController', [
         svg = $('svg')
         circle = $('svg circle')
         style = svg.attr('style')
-        console.log 'style is'
-        console.log style
-        dispatcher.trigger 'moves.dragged', style
+        dispatcher.trigger 'moves.moving', (cx: 150, cy: 150)
         return
 
     $('.another-move').on 'click', (d, i) ->
@@ -75,6 +69,55 @@ movesApp.controller 'MovesController', [
       $scope.circle_cy = new_circle_cy;
       return
 
+    width = 300
+    height = 300
+    radius = 20
+
+#    update = (data) ->
+#      d3.select('.blackdot')
+#        .data(data)
+#        .enter().append('circle')
+#          .attr('r', radius)
+#          .attr('cx', (d) -> d.cx)
+#          .attr('cy', (d) -> d.cy)
+#      return
+
+    dragmove = (d) ->
+      console.log 'drag it'
+      d3.select(this)
+        .attr('cx', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
+        .attr('cy', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
+      return
+
+#    dragEnd = (d) ->
+#      console.log 'this is: '
+#      console.log this
+#      cx = d3.select(this).attr('cx')
+#      cy = d3.select(this).attr('cy')
+#      dispatcher.trigger 'moves.moving', (cx: cx, cy: cy)
+#      return
+
+    drag = d3.behavior.drag().origin((d) -> d)
+      .on('drag', dragmove)
+      #.on('dragend', dragEnd)
+
+
+    svg = d3.select('body .dotsection').append('div')
+      .selectAll('svg').data([{x: 250, y: 250}])
+      .enter().append('svg')
+        .attr('class', 'blackdot')
+        .attr('width', width)
+        .attr('height', height)
+        .style('border', '10px')
+        .style('border-style', 'solid')
+
+    svg.append('circle')
+      .attr('r', radius)
+      .attr('cx', (d) -> d.x)
+      .attr('cy', (d) -> d.y)
+      .call(drag)
+
+
 
     return
 ]
@@ -92,23 +135,6 @@ $(document).ready ->
   $('#submit-move').on 'click', ->
     submitMove $('#new-move').val()
     return
-
-  width = 300
-  height = 300
-  radius = 20
-
-  dragmove = (d) ->
-    console.log('drag it')
-    d3.select(this).attr('cx', d.x = Math.max(radius, Math.min(width - radius, d3.event.x))).attr('cy', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
-    console.log('drag it')
-    return
-
-  drag = d3.behavior.drag().origin((d) -> d).on('drag', dragmove).on('dragstart', -> console.log('drasntart'))
-
-  svg = d3.select('body').append('div').selectAll('svg').data([{x: 150, y: 150}])
-    .enter().append('svg').attr('width', width).attr('height', height)
-
-  svg.append('circle').attr('r', radius).attr('cx', (d) -> d.x).attr('cy', (d) -> d.y).call(drag)
 
   return
 
