@@ -10,9 +10,14 @@ movesApp.controller 'MovesController', [
     updatedot = (data) ->
       console.log ['updatedot: ', data]
       dots = d3.select('.blacksection svg').selectAll('circle .blackdot')
-        .data(data, (d) ->
-          d
-        )
+        .data(data, (d) -> 0)
+
+      dots
+        .attr('class', 'blackdot')
+        .attr('r', radius)
+        .attr('cx', (d) -> d.cx)
+        .attr('cy', (d) -> d.cy)
+        .call(drag)
 
       dots
         .enter()
@@ -29,7 +34,7 @@ movesApp.controller 'MovesController', [
     dispatcher.bind 'moves', 'reddot', (coordinate) ->
       $scope.circle_cx = coordinate.cx
       $scope.circle_cy = coordinate.cy
-      updatedot([coordinate, {cx: 10, cy: 20}])
+      updatedot([coordinate])
       return
 
     # Get all of the moves from the server. Just a regular http get.
