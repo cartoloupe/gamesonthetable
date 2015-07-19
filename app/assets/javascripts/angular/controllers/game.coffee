@@ -41,8 +41,6 @@ movesApp.controller 'MovesController', [
       $scope.newMove.destroy()
       return
 
-    $scope.svg_style = "";
-
     $('svg').draggable
       stop: ->
         svg = $('svg')
@@ -103,6 +101,7 @@ movesApp.controller 'MovesController', [
 
 
     svg = d3.select('body .dotsection').append('div')
+        .attr('class', 'blacksection')
       #.selectAll('svg').data([{x: 250, y: 250}]).enter()
         .append('svg')
         .attr('class', 'blackdot')
@@ -111,10 +110,11 @@ movesApp.controller 'MovesController', [
         .style('border', '10px')
         .style('border-style', 'solid')
 
-    svg.selectAll('circle')
+    svg.selectAll('circle.blackdot')
       .data([{x: 50, y: 50}])
       .enter()
       .append('circle')
+      .attr('class', 'blackdot')
       .attr('r', radius)
       .attr('cx', (d) -> d.x)
       .attr('cy', (d) -> d.y)
