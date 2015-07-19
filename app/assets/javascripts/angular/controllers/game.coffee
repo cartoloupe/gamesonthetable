@@ -103,15 +103,18 @@ movesApp.controller 'MovesController', [
 
 
     svg = d3.select('body .dotsection').append('div')
-      .selectAll('svg').data([{x: 250, y: 250}])
-      .enter().append('svg')
+      #.selectAll('svg').data([{x: 250, y: 250}]).enter()
+        .append('svg')
         .attr('class', 'blackdot')
         .attr('width', width)
         .attr('height', height)
         .style('border', '10px')
         .style('border-style', 'solid')
 
-    svg.append('circle')
+    svg.selectAll('circle')
+      .data([{x: 50, y: 50}])
+      .enter()
+      .append('circle')
       .attr('r', radius)
       .attr('cx', (d) -> d.x)
       .attr('cy', (d) -> d.y)
