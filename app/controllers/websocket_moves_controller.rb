@@ -13,7 +13,7 @@ class WebsocketMovesController < WebsocketRails::BaseController
   def broadcast_move
     Rails.logger.debug 'broadcast_move'
     # The `message` method contains the data received
-    WebsocketRails[:moves].trigger 'reddot', {cx: message[:cx], cy: message[:cy]}
+    WebsocketRails[:moves].trigger 'reddot', message
   end
 
   def broadcast_move_dragged

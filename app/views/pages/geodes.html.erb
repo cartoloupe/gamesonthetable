@@ -23,10 +23,15 @@
           <span>{{user}}</span>
         </li>
       </ul>
-      <div ng-controller='MovesController'>
-        <svg height='500' width='500' style="position: relative; {{svg_style}}">
-        <circle cx={{circle_cx}} cy={{circle_cy}} fill='red' r='20'></circle>
-        </svg>
+
+      <div class="dotsection">
+        <div class="redsection">
+          <div ng-controller='MovesController'>
+            <svg height='250' width='250'>
+            <circle cx={{circle_cx}} cy={{circle_cy}} fill='red' r='20'></circle>
+            </svg>
+          </div>
+        </div>
       </div>
 
     </div>

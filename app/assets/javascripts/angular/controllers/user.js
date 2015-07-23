@@ -37,7 +37,7 @@ movesApp.controller('UserController', ['$scope', 'Auth', 'dispatcher', function(
     if ($scope.current_users.indexOf(user.email) == -1){
       $scope.current_users.push(user.email);
     }
-    console.log('user logged_in from user.js');
+    //console.log('user logged_in from user.js');
   });
 
 }]);

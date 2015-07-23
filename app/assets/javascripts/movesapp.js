@@ -26,7 +26,7 @@
     var dispatcher = new WebSocketRails(window.location.host + '/websocket');
     //console.log(dispatcher);
     dispatcher.on_open = function(data) {
-      console.log('Connection has been established: ', data);
+      //console.log('Connection has been established: ', data);
     };
 
     var Dispatcher = function() {
@@ -88,7 +88,7 @@
         var moves = movesData.map(function(move) {
           return new MoveResource(move.number_of_moves);
         });
-        console.log(moves);
+        //console.log(moves);
         successCallBack(moves);
       });
     };
@@ -105,7 +105,7 @@
     };
 
     MoveResource.prototype.save = function(successCallBack) {
-      console.log('saving moves');
+      //console.log('saving moves');
       return $http.post('/moves.json', this).success(function(moveData) {
         var move = new MoveResource(moveData.number_of_moves);
         successCallBack(move);
