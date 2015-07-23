@@ -19,61 +19,62 @@ movesApp.controller 'MovesController', [
         .style('border', '10px')
         .style('border-style', 'solid')
 
-
     updatedot = (data) ->
-      console.log ['updatedot: ', data]
-      dots = d3.select('.blacksection svg').selectAll('circle.blackdot')
-        .data(data, (d) -> 0)
+      console.log 'updatedot: '
+      console.log data
+      dots = d3.select('.blacksection svg').selectAll('circle')
+        .data(data, ((d) -> 1000 * d.cx + d.cy ))
 
-      dots
-        .attr('class', 'blackdot')
+      dots.attr('class', 'blackdot')
+        .transition()
+          .duration(1000)
         .attr('r', radius)
         .attr('cx', (d) -> d.cx)
         .attr('cy', (d) -> d.cy)
         .call(drag)
 
-      dots
-        .enter()
-        .append('circle')
+      dots.enter().append('circle')
           .attr('class', 'blackdot')
-          .attr('r', radius)
-          .attr('cx', (d) -> d.cx)
-          .attr('cy', (d) -> d.cy)
+          .attr('r', 0)
           .call(drag)
+          .transition()
+            .duration(1000)
+            .attr('cx', (d) -> d.cx)
+            .attr('cy', (d) -> d.cy)
+            .attr('r', radius)
 
-      dots.exit().remove()
+      dots.exit()
+          .transition()
+            .duration(1000)
+            .attr('r', 0)
+          .remove()
       return
 
-    dispatcher.bind 'moves', 'reddot', (coordinate) ->
-      $scope.circle_cx = coordinate.cx
-      $scope.circle_cy = coordinate.cy
-      updatedot([coordinate])
+    dispatcher.bind 'moves', 'reddot', (coordinates) ->
+      $scope.circle_cx = coordinates[0].cx
+      $scope.circle_cy = coordinates[0].cy
+      updatedot(coordinates)
       return
 
     # Get all of the moves from the server. Just a regular http get.
     MoveResource.all (moves) ->
-      #console.log("success");
       $scope.moves = moves
       return
 
     MoveResource.onCreate (move) ->
-      #console.log(move);
       $scope.moves.push move
       return
 
     $scope.newMove = new MoveResource
 
     $scope.saveMove = ->
-      #console.log('click saveMove');
       $scope.newMove.save (move) ->
-        #console.log(move);
         # $scope.moves.push(move);
         $scope.newMove = new MoveResource
         return
       return
 
     $scope.destroyMove = ->
-      #console.log('click destroyMove');
       $scope.newMove.destroy()
       return
 
@@ -81,20 +82,25 @@ movesApp.controller 'MovesController', [
       d3.select(this)
         .attr('cx', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
         .attr('cy', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
+
       return
 
     dragEnd = (d) ->
       cx = d3.select(this).attr('cx')
       cy = d3.select(this).attr('cy')
-      console.log ['triggerring to moves.moving: ', cx, cy]
-      dispatcher.trigger 'moves.moving', (cx: cx, cy: cy)
+      $scope.circleData.push({cx: cx, cy: cy})
+      if ($scope.circleData.length > 5)
+        $scope.circleData.shift()
+
+      dispatcher.trigger 'moves.moving', $scope.circleData
       return
 
     drag = d3.behavior.drag()
       .on('drag', dragmove)
       .on('dragend', dragEnd)
 
-    updatedot([{cx: 150, cy: 150}])
+    $scope.circleData = [ {cx: 150, cy: 150}, {cx: 250, cy: 250}, {cx: 30, cy: 10} ]
+    updatedot($scope.circleData)
 
     return
 ]
