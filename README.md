@@ -105,4 +105,5 @@ rake db:migrate
 `bundle exec mina deploy`
 ### forcing asset precompilation
 `bundle exec mina deploy force_assets=1`
+
 ^ [from the mina site](http://nadarei.co/mina/tasks/rails_assets_precompile.html)
