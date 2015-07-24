@@ -20,8 +20,6 @@ movesApp.controller 'MovesController', [
         .style('border-style', 'solid')
 
     updatedot = (data) ->
-      console.log 'updatedot: '
-      console.log data
       dots = d3.select('.blacksection svg').selectAll('circle')
         .data(data, ((d) -> 1000 * d.cx + d.cy ))
 
@@ -36,6 +34,7 @@ movesApp.controller 'MovesController', [
       dots.enter().append('circle')
           .attr('class', 'blackdot')
           .attr('r', 0)
+          .attr('dataid', (d, i) -> i)
           .call(drag)
           .transition()
             .duration(1000)
@@ -45,7 +44,7 @@ movesApp.controller 'MovesController', [
 
       dots.exit()
           .transition()
-            .duration(1000)
+            .duration(750)
             .attr('r', 0)
           .remove()
       return
@@ -86,11 +85,18 @@ movesApp.controller 'MovesController', [
       return
 
     dragEnd = (d) ->
-      cx = d3.select(this).attr('cx')
-      cy = d3.select(this).attr('cy')
-      $scope.circleData.push({cx: cx, cy: cy})
-      if ($scope.circleData.length > 5)
-        $scope.circleData.shift()
+      dragged = d3.select(this)
+      cx = dragged.attr('cx')
+      cy = dragged.attr('cy')
+      id = dragged.attr('dataid')
+      updatee = $scope.circleData.filter((d) ->
+        console.log id
+        console.log [id, d]
+        return id == d.dataid
+      )[0]
+      updatee.cx = cx
+      updatee.cy = cy
+
 
       dispatcher.trigger 'moves.moving', $scope.circleData
       return
@@ -99,8 +105,15 @@ movesApp.controller 'MovesController', [
       .on('drag', dragmove)
       .on('dragend', dragEnd)
 
-    $scope.circleData = [ {cx: 150, cy: 150}, {cx: 250, cy: 250}, {cx: 30, cy: 10} ]
+    $scope.circleData = [ ]
     updatedot($scope.circleData)
+
+    $('.add-circle').click ->
+      dataid = $scope.circleData.length
+      $scope.circleData.push({dataid: ""+dataid, cx: 30, cy: 30})
+      if ($scope.circleData.length > 5)
+        $scope.circleData.shift()
+      updatedot($scope.circleData)
 
     return
 ]
