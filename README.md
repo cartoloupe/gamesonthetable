@@ -102,6 +102,7 @@ rake db:migrate
 
 ## deploying
 `bundle exec mina setup`
+
 `bundle exec mina deploy`
 ### forcing asset precompilation
 `bundle exec mina deploy force_assets=1`
