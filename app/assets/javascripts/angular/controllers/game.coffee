@@ -26,12 +26,12 @@ movesApp.controller 'MovesController', [
         .data(data, ((d) -> 1000 * d.cx + d.cy ))
 
       dots.attr('class', 'blackdot')
+        .call(drag)
         .transition()
           .duration(1000)
         .attr('r', radius)
         .attr('cx', (d) -> d.cx)
         .attr('cy', (d) -> d.cy)
-        .call(drag)
 
       dots.enter().append('circle')
           .attr('class', 'blackdot')
