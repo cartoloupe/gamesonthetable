@@ -99,3 +99,10 @@ rake db:migrate
 ```
 
 ^ [stackoverflow](http://stackoverflow.com/questions/15162055/rails-generate-migration#answer-20008381)
+
+## deploying
+`bundle exec mina setup`
+`bundle exec mina deploy`
+### forcing asset precompilation
+`bundle exec mina deploy force_assets=1`
+^ [from the mina site](http://nadarei.co/mina/tasks/rails_assets_precompile.html)
