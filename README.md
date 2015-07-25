@@ -108,3 +108,32 @@ rake db:migrate
 `bundle exec mina deploy force_assets=1`
 
 ^ [from the mina site](http://nadarei.co/mina/tasks/rails_assets_precompile.html)
+
+### troubleshooting
+#### angular not loading
+Problem: `{{...}}` instead of data loading
+
+Solution: Angular isn't getting loaded, it's something with the pipeline. Mina only kicks off the precompile.
+It might skip the migration because the schema didn't change.
+- try forcing asset precompile with `bundle exec mina force_assets=1`
+
+`thin` might not be restarting. Hence, the HTML will looking for
+an old Javascript file that no longer exists.
+- One reason thin might not restart is that it stores it’s process id 
+in `/var/www/gott/current/tmp/pid`, and for whatever reason, that might be owned by root.
+Deployer doesn’t have access to delete the old pid file and create a new one;
+try changing the ownership.
+
+#### stopping and starting thin
+`rbenv sudo /etc/init.d/thin stop`
+
+`rbenv sudo /etc/init.d/thin stop`
+
+- Make sure it’s really stopping. If it can’t unlink the file in the
+pids directory and create a new one, nothing will happen.
+Try killing it with `kill -9`. That’ll ensure it’s really dead.
+Delete the contents of logs at `log/thin*log`. Then start it
+with the above. See what happens and check the logs.
+  - Maybe the sudo is causing the directory to revert to root.
+
+
