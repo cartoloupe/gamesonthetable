@@ -4,12 +4,19 @@ movesApp.controller 'MovesController', [
   '$scope'
   'dispatcher'
   (MoveResource, $scope, dispatcher) ->
-    $scope.circle_cx = 50;
-    $scope.circle_cy = 50;
 
-    width = 300
-    height = 300
+    width = 500
+    height = 500
     radius = 20
+
+    trianglePoints = (x,y) ->
+      point1 = ''+x+','+(y-radius)+' '
+      point2 = ''+(x - 0.866 * radius)+','+(y+radius/2.0)+' '
+      point3 = ''+(x + 0.866 * radius)+','+(y+radius/2.0)+' '
+      points = point1 + point2 + point3
+      console.log 'tp'
+      console.log points
+      points
 
     svg = d3.select('body .dotsection').append('div')
         .attr('class', 'blacksection')
@@ -20,39 +27,59 @@ movesApp.controller 'MovesController', [
         .style('border-style', 'solid')
 
     updatedot = (data) ->
-      dots = d3.select('.blacksection svg').selectAll('circle')
+      svg = d3.select('.blacksection svg')
+      dots = svg.selectAll('.items')
         .data(data, ((d) -> 1000 * d.cx + d.cy ))
 
-      dots.attr('class', 'blackdot')
+      dots.attr('class', 'blackdot items')
         .call(drag)
-        .transition()
-          .duration(1000)
         .attr('r', radius)
+        .transition()
+          .duration(500)
         .attr('cx', (d) -> d.cx)
         .attr('cy', (d) -> d.cy)
 
-      dots.enter().append('circle')
-          .attr('class', 'blackdot')
-          .attr('r', 0)
-          .attr('dataid', (d, i) -> i)
-          .call(drag)
-          .transition()
-            .duration(1000)
-            .attr('cx', (d) -> d.cx)
-            .attr('cy', (d) -> d.cy)
-            .attr('r', radius)
+      entering = dots.enter()
+      entering.append((d, i) ->
+        console.log [d,i]
+        if d.type == 'rect'
+          svg.append('rect')
+            .attr('x', d.x)
+            .attr('y', d.y)
+            .attr('width', d.width)
+            .attr('height', d.height)
+            .node()
+        else if d.type == 'triangle'
+          svg.append('polygon')
+            .attr('points', trianglePoints(d.x, d.y))
+            .attr('x', d.x)
+            .attr('y', d.y)
+            .node()
+        else
+          svg.append('circle')
+            .attr('r', d.r)
+            .node()
+      )
+        .attr('class', 'blackdot items')
+        .attr('dataid', (d, i) -> i)
+        .attr('type', (d) -> d.type)
+        .attr('stroke', 'white')
+        .call(drag)
+        .transition()
+          .duration(1000)
+          .attr('cx', (d) -> d.cx)
+          .attr('cy', (d) -> d.cy)
 
       dots.exit()
           .transition()
-            .duration(750)
+            .duration(500)
             .attr('r', 0)
           .remove()
       return
 
-    dispatcher.bind 'moves', 'reddot', (coordinates) ->
-      $scope.circle_cx = coordinates[0].cx
-      $scope.circle_cy = coordinates[0].cy
-      updatedot(coordinates)
+    dispatcher.bind 'moves', 'reddot', (data) ->
+      $scope.circleData = data
+      updatedot(data)
       return
 
     # Get all of the moves from the server. Just a regular http get.
@@ -78,9 +105,16 @@ movesApp.controller 'MovesController', [
       return
 
     dragmove = (d) ->
-      d3.select(this)
-        .attr('cx', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
-        .attr('cy', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
+      console.log d3.select(this).attr('type')
+      if d3.select(this).attr('type') == 'triangle'
+        d3.select(this)
+          .attr('points', trianglePoints(d3.event.x, d3.event.y))
+      else
+        d3.select(this)
+          .attr('cx', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
+          .attr('cy', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
+          .attr('x', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
+          .attr('y', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
 
       return
 
@@ -90,8 +124,6 @@ movesApp.controller 'MovesController', [
       cy = dragged.attr('cy')
       id = dragged.attr('dataid')
       updatee = $scope.circleData.filter((d) ->
-        console.log id
-        console.log [id, d]
         return id == d.dataid
       )[0]
       updatee.cx = cx
@@ -110,9 +142,17 @@ movesApp.controller 'MovesController', [
 
     $('.add-circle').click ->
       dataid = $scope.circleData.length
-      $scope.circleData.push({dataid: ""+dataid, cx: 30, cy: 30})
-      if ($scope.circleData.length > 5)
-        $scope.circleData.shift()
+      $scope.circleData.push({dataid: ""+dataid, cx: 30, cy: 30, r: 20})
+      updatedot($scope.circleData)
+
+    $('.add-rect').click ->
+      dataid = $scope.circleData.length
+      $scope.circleData.push({type: 'rect', dataid: ""+dataid, x: 50, y: 50, width: 30, height: 30})
+      updatedot($scope.circleData)
+
+    $('.add-triangle').click ->
+      dataid = $scope.circleData.length
+      $scope.circleData.push({type: 'triangle', dataid: ""+dataid, x: 50, y: 50, width: 30, height: 30})
       updatedot($scope.circleData)
 
     return
