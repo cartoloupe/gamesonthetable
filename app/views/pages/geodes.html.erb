@@ -14,7 +14,12 @@
       </ul>
 
       <div ng-controller='MovesController'>
-        <div class="dotsection">
+        <div class="row">
+          <div class="col-md-9 dotsection">
+          </div>
+          <div class="col-md-3 chatsection pull-right">
+            <input />
+          </div>
         </div>
 
         <div class="controls">
@@ -23,6 +28,26 @@
             <polygon class="items add-triangle" points="{{trianglePoints(65,55)}}" style="fill:black;stroke:white;stroke-width:1" />
             <polygon class="items add-square" points="{{squarePoints(110,50)}}" style="fill:black;stroke:white;stroke-width:1" />
           </svg>
+        </div>
+        <div class="usersection">
+          <p>{{current_user}}</p>
+        </div>
+        <div class="deletesection">
+          <button>X</button>
+        </div>
+        <div class="row">
+          <div class="col-md-4 resultsection">
+            <ul>
+              <li>Y</li>
+              <li>N</li>
+            </ul>
+          </div>
+          <div class="col-md-4 querysection">
+            <ul>
+              <li>guess</li>
+              <li>ask</li>
+            </ul>
+          </div>
         </div>
       </div>
 
