@@ -9,6 +9,13 @@ movesApp.controller 'MovesController', [
     height = 500
     radius = 20
 
+    $scope.trail = []
+    $scope.del_x = []
+    $scope.del_y = []
+    $scope.e_del_x = 0
+    $scope.e_del_y = 0
+    $scope.trailMax = 100
+
     $scope.trianglePoints = (x,y) ->
       point1 = ''+x+','+(y-radius)+' '
       point2 = ''+(x - 0.866 * radius)+','+(y+radius/2.0)+' '
@@ -126,7 +133,41 @@ movesApp.controller 'MovesController', [
         .attr('x', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
         .attr('y', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
 
+      $scope.trail.push([d3.event.x, d3.event.y])
+      if $scope.trail.size > $scope.trailMax
+        $scope.trail.shift
+
+      if is_circle($scope.trail)
+        console.log $scope.trail.length
+        dragged.attr('style', 'fill:'+ switchColor())
+
       return
+
+
+    is_circle = (trail) ->
+      del_x = []
+      del_y = []
+      for d, i in trail by 2
+        if i+1 != trail.length
+          del_x.push trail[i][0] - trail[i+1][0]
+          del_y.push trail[i][1] - trail[i+1][1]
+      console.log del_x
+      console.log del_y
+      e_del_x = del_x.reduce (x,y) -> x+y
+      e_del_y = del_y.reduce (x,y) -> x+y
+
+      if Math.abs(e_del_x) < 20 && Math.abs(e_del_y) < 20
+        return true
+      else
+        return false
+
+
+    switchColor = do ->
+      colors = ['red', 'green', 'blue', 'black']
+      i = colors.length
+      inner = ->
+        i = ( i + 1 ) % colors.length
+        return colors[i]
 
     dragEnd = (d) ->
       dragged = d3.select(this)
@@ -143,8 +184,15 @@ movesApp.controller 'MovesController', [
       updatee.x = x
       updatee.y = y
 
+      if is_circle($scope.trail)
+        console.log $scope.trail.length
+        dragged.attr('style', 'fill:'+ switchColor())
+
+      $scope.trail = []
+
       dispatcher.trigger 'moves.moving', $scope.circleData
       return
+
 
     drag = d3.behavior.drag()
       .on('drag', dragmove)
