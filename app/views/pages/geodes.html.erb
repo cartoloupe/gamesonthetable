@@ -5,18 +5,7 @@
   <div class="row">
 
     <div class="col-md-3 pull-left">
-      <h3>User Information</h3>
-      <p>Current user: {{current_user}}</p>
-      <button ng-click='getUser()'>getUser</button>
-      <button
-        class='another-move'
-        ng-model='newMove.number_of_moves'
-        ng-submit='saveMove()'
-        >
-        3
-      </button>
-
-      <br>
+      <button ng-click='getUser()'>Refresh</button>
       <h3>At this table:</h3>
       <ul class="">
         <li ng-repeat="user in current_users">
@@ -24,22 +13,44 @@
         </li>
       </ul>
 
-      <div class="dotsection">
-        <div class="redsection">
-          <div ng-controller='MovesController'>
-            <svg height='250' width='250'>
-            <circle cx={{circle_cx}} cy={{circle_cy}} fill='red' r='20'></circle>
-            </svg>
+      <div ng-controller='MovesController'>
+        <div class="row">
+          <div class="col-md-9 dotsection">
+          </div>
+          <div class="col-md-3 chatsection pull-right">
+            <input />
+          </div>
+        </div>
+
+        <div class="controls">
+          <svg height='100' width='250'>
+            <circle class="items add-circle" cx=20 cy=50 fill='black' r='20' style="stroke:white"></circle>
+            <polygon class="items add-triangle" points="{{trianglePoints(65,55,20)}}" style="fill:black;stroke:white;stroke-width:1" />
+            <polygon class="items add-square" points="{{squarePoints(110,50,20)}}" style="fill:black;stroke:white;stroke-width:1" />
+          </svg>
+        </div>
+        <div class="usersection">
+          <p>{{current_user}}</p>
+        </div>
+        <div class="deletesection">
+          <button>X</button>
+        </div>
+        <div class="row">
+          <div class="col-md-4 resultsection">
+            <ul>
+              <li>Y</li>
+              <li>N</li>
+            </ul>
+          </div>
+          <div class="col-md-4 querysection">
+            <ul>
+              <li>guess</li>
+              <li>ask</li>
+            </ul>
           </div>
         </div>
       </div>
-      <div class="controls">
-        <svg height='100' width='250'>
-          <circle class="add-circle" cx=20 cy=50 fill='black' r='20' style="stroke:white"></circle>
-          <polygon class="add-triangle" points="45,65 60,35 75,65" style="fill:black;stroke:white;stroke-width:1" />
-          <rect x=90 y=30 width=40 height=40 style="fill:black;stroke-width:1;stroke:white" />
-        </svg>
-      </div>
+
 
     </div>
   </div>
