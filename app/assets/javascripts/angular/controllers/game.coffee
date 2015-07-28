@@ -7,7 +7,6 @@ movesApp.controller 'MovesController', [
 
     width = 500
     height = 500
-    radius = 20
 
     $scope.trail = []
     $scope.del_x = []
@@ -16,16 +15,16 @@ movesApp.controller 'MovesController', [
     $scope.e_del_y = 0
     $scope.trailHead = 0
 
-    $scope.trianglePoints = (x,y) ->
-      point1 = ''+x+','+(y-radius)+' '
-      point2 = ''+(x - 0.866 * radius)+','+(y+radius/2.0)+' '
-      point3 = ''+(x + 0.866 * radius)+','+(y+radius/2.0)+' '
+    $scope.trianglePoints = (x,y,r) ->
+      point1 = ''+x+','+(y-r)+' '
+      point2 = ''+(x - 0.866 * r)+','+(y+r/2.0)+' '
+      point3 = ''+(x + 0.866 * r)+','+(y+r/2.0)+' '
       points = point1 + point2 + point3
       points
 
-    $scope.squarePoints = (x,y) ->
+    $scope.squarePoints = (x,y,r) ->
       a = 0.707
-      b = a*radius
+      b = a*r
       point1 = ''+(x - b)+','+(y - b)+' '
       point2 = ''+(x - b)+','+(y + b)+' '
       point3 = ''+(x + b)+','+(y + b)+' '
@@ -51,7 +50,6 @@ movesApp.controller 'MovesController', [
 
       dots.attr('class', 'blackdot items')
         .call(drag)
-        .attr('r', radius)
         .transition()
           .duration(500)
 
@@ -59,11 +57,13 @@ movesApp.controller 'MovesController', [
       entering.append((d, i) ->
         if d.type == 'square'
           svg.append('polygon')
-            .attr('points', $scope.squarePoints(1.0 * d.x, 1.0 * d.y))
+            .attr('r', d.r)
+            .attr('points', $scope.squarePoints(1.0 * d.x, 1.0 * d.y, 1.0 * d.r))
             .node()
         else if d.type == 'triangle'
           svg.append('polygon')
-            .attr('points', $scope.trianglePoints(1.0 * d.x, 1.0 * d.y))
+            .attr('r', d.r)
+            .attr('points', $scope.trianglePoints(1.0 * d.x, 1.0 * d.y, 1.0 * d.r))
             .node()
         else
           c = $scope.circlePoints(1.0 * d.x, 1.0 * d.y)
@@ -120,6 +120,7 @@ movesApp.controller 'MovesController', [
       x = d3.event.x
       y = d3.event.y
       type = d3.select(this).attr('type')
+      r = d3.select(this).attr('r')
 
       d3.select(this)
         .attr('x', d.x = x)
@@ -127,10 +128,10 @@ movesApp.controller 'MovesController', [
 
       if type == 'triangle'
         d3.select(this)
-          .attr('points', $scope.trianglePoints(x, y))
+          .attr('points', $scope.trianglePoints(x, y, r))
       else if type == 'square'
         d3.select(this)
-          .attr('points', $scope.squarePoints(x, y))
+          .attr('points', $scope.squarePoints(x, y, r))
       else
         c = $scope.circlePoints(x, y)
         d3.select(this)
@@ -156,9 +157,50 @@ movesApp.controller 'MovesController', [
         updatee.fill = newColor
         resetTrail()
 
+
+      if nearLeftEdge(x,y,r)
+        d3.select(this)
+          .attr('r', 20)
+
+      if nearTopEdge(x,y,r)
+        d3.select(this)
+          .attr('r', 50)
+
+      if nearRightEdge(x,y,r)
+        d3.select(this)
+          .attr('r', 100)
+
       return
 
     by_addition = (x,y) -> x+y
+
+    nearLeftEdge = (x,y,r) ->
+      leftSide = x
+      if leftSide < 2
+        true
+      else
+        false
+
+    nearTopEdge = (x,y,r) ->
+      topSide = y
+      if topSide < 2
+        true
+      else
+        false
+
+    nearRightEdge = (x,y,r) ->
+      rightSide = x
+      if width - rightSide < 1
+        true
+      else
+        false
+
+    nearBottomEdge = (x,y,r) ->
+      bottomSide = y
+      if height - bottomSide < 1
+        true
+      else
+        false
 
     is_circle = () ->
       if $scope.trailHead < 20
@@ -168,7 +210,6 @@ movesApp.controller 'MovesController', [
         return true
       else
         return false
-
 
     switchColor = do ->
       colors = ['red', 'green', 'blue', 'black']
@@ -189,12 +230,18 @@ movesApp.controller 'MovesController', [
       dragged = d3.select(this)
       x = dragged.attr('x')
       y = dragged.attr('y')
+      r = dragged.attr('r')
       id = dragged.attr('dataid')
+
       updatee = $scope.circleData.filter((d) ->
         return id == d.dataid
       )[0]
       updatee.x = x
       updatee.y = y
+      updatee.r = r
+
+      if nearBottomEdge(x,y,r)
+        $scope.circleData.splice( $scope.circleData.indexOf(updatee), 1);
 
       resetTrail()
 
@@ -211,17 +258,17 @@ movesApp.controller 'MovesController', [
 
     $('.add-circle').click ->
       dataid = $scope.circleData.length
-      $scope.circleData.push({type: 'circle', dataid: ""+dataid, x: 30, y: 30, cx: 30, cy: 30, r: 20})
+      $scope.circleData.push({type: 'circle', dataid: ""+dataid, x: 30, y: 30, r: 20 })
       updatedot($scope.circleData)
 
     $('.add-square').click ->
       dataid = $scope.circleData.length
-      $scope.circleData.push({type: 'square', dataid: ""+dataid, x: 50, y: 50 })
+      $scope.circleData.push({type: 'square', dataid: ""+dataid, x: 50, y: 50, r: 20 })
       updatedot($scope.circleData)
 
     $('.add-triangle').click ->
       dataid = $scope.circleData.length
-      $scope.circleData.push({type: 'triangle', dataid: ""+dataid, x: 50, y: 50, width: 30, height: 30})
+      $scope.circleData.push({type: 'triangle', dataid: ""+dataid, x: 50, y: 50, r: 20 })
       updatedot($scope.circleData)
 
     return
