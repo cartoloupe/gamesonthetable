@@ -5,8 +5,8 @@ movesApp.controller 'MovesController', [
   'dispatcher'
   (MoveResource, $scope, dispatcher) ->
 
-    width = 500
-    height = 500
+    width = 250
+    height = 250
 
     $scope.trail = []
     $scope.del_x = []
