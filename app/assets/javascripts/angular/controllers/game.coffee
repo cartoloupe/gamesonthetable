@@ -33,6 +33,9 @@ movesApp.controller 'MovesController', [
       points = point1 + point2 + point3 + point4
       points
 
+    $scope.circlePoints = (x,y) ->
+      {cx: x, cy: y}
+
     svg = d3.select('body .dotsection').append('div')
         .attr('class', 'blacksection')
         .append('svg')
@@ -51,8 +54,6 @@ movesApp.controller 'MovesController', [
         .attr('r', radius)
         .transition()
           .duration(500)
-        .attr('cx', (d) -> d.cx)
-        .attr('cy', (d) -> d.cy)
 
       entering = dots.enter()
       entering.append((d, i) ->
@@ -65,8 +66,11 @@ movesApp.controller 'MovesController', [
             .attr('points', $scope.trianglePoints(1.0 * d.x, 1.0 * d.y))
             .node()
         else
+          c = $scope.circlePoints(1.0 * d.x, 1.0 * d.y)
           svg.append('circle')
             .attr('r', d.r)
+            .attr('cx', c.cx)
+            .attr('cy', c.cy)
             .node()
       )
         .attr('class', 'blackdot items')
@@ -77,16 +81,12 @@ movesApp.controller 'MovesController', [
         .attr('fill', (d) -> d.fill)
         .attr('stroke', 'white')
         .call(drag)
-        .transition()
-          .duration(1000)
-          .attr('cx', (d) -> d.cx)
-          .attr('cy', (d) -> d.cy)
 
       dots.exit()
-          .transition()
-            .duration(500)
-            .attr('r', 0)
-          .remove()
+        .transition()
+          .duration(500)
+          .attr('r', 0)
+        .remove()
       return
 
     dispatcher.bind 'moves', 'reddot', (data) ->
@@ -132,9 +132,10 @@ movesApp.controller 'MovesController', [
         d3.select(this)
           .attr('points', $scope.squarePoints(x, y))
       else
+        c = $scope.circlePoints(x, y)
         d3.select(this)
-          .attr('cx', x)
-          .attr('cy', y)
+          .attr('cx', c.cx)
+          .attr('cy', c.cy)
 
       $scope.trail.push([x, y])
       $scope.trailHead = $scope.trailHead + 1
@@ -186,16 +187,12 @@ movesApp.controller 'MovesController', [
 
     dragEnd = (d) ->
       dragged = d3.select(this)
-      cx = dragged.attr('cx')
-      cy = dragged.attr('cy')
       x = dragged.attr('x')
       y = dragged.attr('y')
       id = dragged.attr('dataid')
       updatee = $scope.circleData.filter((d) ->
         return id == d.dataid
       )[0]
-      updatee.cx = cx
-      updatee.cy = cy
       updatee.x = x
       updatee.y = y
 
