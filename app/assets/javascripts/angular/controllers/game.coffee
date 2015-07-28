@@ -14,7 +14,7 @@ movesApp.controller 'MovesController', [
     $scope.del_y = []
     $scope.e_del_x = 0
     $scope.e_del_y = 0
-    $scope.trailMax = 100
+    $scope.trailHead = 0
 
     $scope.trianglePoints = (x,y) ->
       point1 = ''+x+','+(y-radius)+' '
@@ -58,11 +58,11 @@ movesApp.controller 'MovesController', [
       entering.append((d, i) ->
         if d.type == 'square'
           svg.append('polygon')
-            .attr('points', $scope.squarePoints(d.x, d.y))
+            .attr('points', $scope.squarePoints(1.0 * d.x, 1.0 * d.y))
             .node()
         else if d.type == 'triangle'
           svg.append('polygon')
-            .attr('points', $scope.trianglePoints(d.x, d.y))
+            .attr('points', $scope.trianglePoints(1.0 * d.x, 1.0 * d.y))
             .node()
         else
           svg.append('circle')
@@ -74,6 +74,7 @@ movesApp.controller 'MovesController', [
         .attr('y', (d) -> d.y)
         .attr('dataid', (d, i) -> i)
         .attr('type', (d) -> d.type)
+        .attr('fill', (d) -> d.fill)
         .attr('stroke', 'white')
         .call(drag)
         .transition()
@@ -90,7 +91,6 @@ movesApp.controller 'MovesController', [
 
     dispatcher.bind 'moves', 'reddot', (data) ->
       $scope.circleData = data
-      console.log data
       updatedot(data)
       return
 
@@ -133,30 +133,35 @@ movesApp.controller 'MovesController', [
         .attr('x', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
         .attr('y', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
 
-      $scope.trail.push([d3.event.x, d3.event.y])
-      if $scope.trail.size > $scope.trailMax
-        $scope.trail.shift
 
-      if is_circle($scope.trail)
-        console.log $scope.trail.length
-        dragged.attr('style', 'fill:'+ switchColor())
+      $scope.trail.push([d3.event.x, d3.event.y])
+      $scope.trailHead = $scope.trailHead + 1
+      if $scope.trail.length > 1
+        trail = $scope.trail.slice(-2)
+        $scope.del_x.push trail[0][0] - trail[1][0]
+        $scope.del_y.push trail[0][1] - trail[1][1]
+        $scope.e_del_x = $scope.del_x.reduce by_addition
+        $scope.e_del_y = $scope.del_y.reduce by_addition
+
+      if is_circle()
+        newColor = switchColor()
+        d3.select(this).attr('style', 'fill:'+ newColor)
+        id = d3.select(this).attr('dataid')
+        updatee = $scope.circleData.filter((d) ->
+          return id == d.dataid
+        )[0]
+        updatee.fill = newColor
+        resetTrail()
 
       return
 
+    by_addition = (x,y) -> x+y
 
-    is_circle = (trail) ->
-      del_x = []
-      del_y = []
-      for d, i in trail by 2
-        if i+1 != trail.length
-          del_x.push trail[i][0] - trail[i+1][0]
-          del_y.push trail[i][1] - trail[i+1][1]
-      console.log del_x
-      console.log del_y
-      e_del_x = del_x.reduce (x,y) -> x+y
-      e_del_y = del_y.reduce (x,y) -> x+y
+    is_circle = () ->
+      if $scope.trailHead < 20
+        return false
 
-      if Math.abs(e_del_x) < 20 && Math.abs(e_del_y) < 20
+      if Math.abs($scope.e_del_x) < 30 && Math.abs($scope.e_del_y) < 30
         return true
       else
         return false
@@ -168,6 +173,14 @@ movesApp.controller 'MovesController', [
       inner = ->
         i = ( i + 1 ) % colors.length
         return colors[i]
+
+    resetTrail = ->
+      $scope.trail = []
+      $scope.trailHead = 0
+      $scope.del_x = []
+      $scope.del_y = []
+      $scope.e_del_x = 0
+      $scope.e_del_y = 0
 
     dragEnd = (d) ->
       dragged = d3.select(this)
@@ -184,11 +197,7 @@ movesApp.controller 'MovesController', [
       updatee.x = x
       updatee.y = y
 
-      if is_circle($scope.trail)
-        console.log $scope.trail.length
-        dragged.attr('style', 'fill:'+ switchColor())
-
-      $scope.trail = []
+      resetTrail()
 
       dispatcher.trigger 'moves.moving', $scope.circleData
       return
