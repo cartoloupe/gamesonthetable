@@ -117,24 +117,26 @@ movesApp.controller 'MovesController', [
       return
 
     dragmove = (d) ->
+      x = d3.event.x
+      y = d3.event.y
       type = d3.select(this).attr('type')
-      if type == 'triangle'
-        d3.select(this)
-          .attr('points', $scope.trianglePoints(d3.event.x, d3.event.y))
-      else if type == 'square'
-        d3.select(this)
-          .attr('points', $scope.squarePoints(d3.event.x, d3.event.y))
-      else
-        d3.select(this)
-          .attr('cx', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
-          .attr('cy', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
 
       d3.select(this)
-        .attr('x', d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
-        .attr('y', d.y = Math.max(radius, Math.min(height - radius, d3.event.y)))
+        .attr('x', d.x = x)
+        .attr('y', d.y = y)
 
+      if type == 'triangle'
+        d3.select(this)
+          .attr('points', $scope.trianglePoints(x, y))
+      else if type == 'square'
+        d3.select(this)
+          .attr('points', $scope.squarePoints(x, y))
+      else
+        d3.select(this)
+          .attr('cx', x)
+          .attr('cy', y)
 
-      $scope.trail.push([d3.event.x, d3.event.y])
+      $scope.trail.push([x, y])
       $scope.trailHead = $scope.trailHead + 1
       if $scope.trail.length > 1
         trail = $scope.trail.slice(-2)
