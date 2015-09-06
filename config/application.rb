@@ -24,10 +24,10 @@ module Gonthet
     config.active_record.raise_in_transactional_callbacks = true
     config.middleware.delete Rack::Lock
 
-    log_level = 'INFO'
-    config.logger = Logger.new(STDOUT)
-    config.logger.level = Logger.const_get(log_level)
-    config.log_level = log_level
+    # log_level = 'INFO'
+    # config.logger = Logger.new(STDOUT)
+    # config.logger.level = Logger.const_get(log_level)
+    # config.log_level = log_level
 
   end
 end

@@ -1,0 +1,43 @@
+:css
+  #scroll-div-id {
+    max-height:200px;
+    overflow-y:scroll;
+  }
+
+#user_info{"ng-controller" => "UserController"}
+  .row{"ng-controller" => "MovesController"}
+    -# TODO: Is it OK to have one controller inside another controller?
+    .col-md-7
+      .row
+        %button{"ng-click" => "getUser()"} Refresh
+        %h5 At this table:
+        %ul{"ng-repeat" => "user in current_users"}
+          %li {{user}}
+        %p
+          Test this with other
+          %b players
+          at the table
+        .dotsection
+          %svg{:height => "100", :width => "250"}
+            %circle.items.add-circle{:cx => "20", :cy => "50", :fill => "black", :r => "20", :style => "stroke:white"}
+            %polygon.items.add-triangle{:points => "{{trianglePoints(65,55,20)}}", :style => "fill:black;stroke:white;stroke-width:1"}/
+            %polygon.items.add-square{:points => "{{squarePoints(110,50,20)}}", :style => "fill:black;stroke:white;stroke-width:1"}/
+      .row
+        %p {{current_user}}
+      .row
+        .btn-group
+          %button.btn.btn-default X
+          %button.btn.btn-default Y
+          %button.btn.btn-default N
+          %button.btn.btn-default guess
+          %button.btn.btn-default ask
+    .col-md-5{"ng-controller" => "MessagesController"}
+      %h4 Chat:
+      #scroll-div-id.well{"scroll-to-bottom" => "", "my-data" => "messages"}
+        %ul.list-group{"ng-repeat" => "msg in messages"}
+          %li.list-group-item {{msg.user_name + ": " + msg.the_text}}
+
+      %p Input a message
+      %input{"ng-model" => "message_to_send", "ng-model-options" => "{ updateOn: 'blur' }", "data-update-model-on-enter-key-pressed" => "", "ng-change" => "sendMessage()"}
+  .row
+    %p

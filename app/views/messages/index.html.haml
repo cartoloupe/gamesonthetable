@@ -1,0 +1,27 @@
+%h1 Listing messages
+
+%table.table
+  %thead
+    %tr
+      %th User
+      %th Game
+      %th The text
+      %th The time
+      %th
+      %th
+      %th
+
+  %tbody
+    - @messages.each do |message|
+      %tr
+        %td= message.user
+        %td= message.game
+        %td= message.the_text
+        %td= message.the_time
+        %td= link_to 'Show', message
+        %td= link_to 'Edit', edit_message_path(message)
+        %td= link_to 'Destroy', message, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Create message', new_message_path

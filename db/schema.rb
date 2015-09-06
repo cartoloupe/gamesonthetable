@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627182358) do
+ActiveRecord::Schema.define(version: 20150905214035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,20 @@ ActiveRecord::Schema.define(version: 20150627182358) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.string   "the_text"
+    t.datetime "the_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "messages", ["game_id"], name: "index_messages_on_game_id", using: :btree
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
   create_table "moves", force: :cascade do |t|
-    t.integer  "users_id"
+    t.integer  "user_id"
     t.integer  "number_of_moves"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
@@ -34,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150627182358) do
   end
 
   add_index "moves", ["player_id"], name: "index_moves_on_player_id", using: :btree
-  add_index "moves", ["users_id"], name: "index_moves_on_users_id", using: :btree
+  add_index "moves", ["user_id"], name: "index_moves_on_user_id", using: :btree
 
   create_table "players", force: :cascade do |t|
     t.string   "name"
@@ -69,7 +81,10 @@ ActiveRecord::Schema.define(version: 20150627182358) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "messages", "games"
+  add_foreign_key "messages", "users"
   add_foreign_key "moves", "players"
+  add_foreign_key "moves", "users"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
 end

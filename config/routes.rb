@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :messages
+
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   resources :players do
     get 'join', on: :collection
