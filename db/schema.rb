@@ -13,18 +13,31 @@
 
 ActiveRecord::Schema.define(version: 20150627182358) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "games", force: :cascade do |t|
     t.string   "name"
-    t.datetime "end_time"
+    t.integer  "secs_left"
     t.integer  "num_users"
-    t.string   "status"
+    t.boolean  "open"
+    t.integer  "status_cd"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+<<<<<<< Updated upstream
+=======
+  create_table "messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.string   "the_text"
+    t.datetime "the_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "messages", ["game_id"], name: "index_messages_on_game_id"
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id"
+
+>>>>>>> Stashed changes
   create_table "moves", force: :cascade do |t|
     t.integer  "users_id"
     t.integer  "number_of_moves"
@@ -33,8 +46,13 @@ ActiveRecord::Schema.define(version: 20150627182358) do
     t.integer  "player_id"
   end
 
+<<<<<<< Updated upstream
   add_index "moves", ["player_id"], name: "index_moves_on_player_id", using: :btree
   add_index "moves", ["users_id"], name: "index_moves_on_users_id", using: :btree
+=======
+  add_index "moves", ["player_id"], name: "index_moves_on_player_id"
+  add_index "moves", ["users_id"], name: "index_moves_on_users_id"
+>>>>>>> Stashed changes
 
   create_table "players", force: :cascade do |t|
     t.string   "name"
@@ -45,8 +63,8 @@ ActiveRecord::Schema.define(version: 20150627182358) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "players", ["game_id"], name: "index_players_on_game_id", using: :btree
-  add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
+  add_index "players", ["game_id"], name: "index_players_on_game_id"
+  add_index "players", ["user_id"], name: "index_players_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false
@@ -66,10 +84,13 @@ ActiveRecord::Schema.define(version: 20150627182358) do
     t.string   "last_sign_in_ip"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
+<<<<<<< Updated upstream
   add_foreign_key "moves", "players"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
+=======
+>>>>>>> Stashed changes
 end
