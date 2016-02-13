@@ -11,33 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627182358) do
+ActiveRecord::Schema.define(version: 20160213182118) do
 
   create_table "games", force: :cascade do |t|
     t.string   "name"
-    t.integer  "secs_left"
+    t.datetime "end_time"
     t.integer  "num_users"
-    t.boolean  "open"
-    t.integer  "status_cd"
+    t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-<<<<<<< Updated upstream
-=======
-  create_table "messages", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "game_id"
-    t.string   "the_text"
-    t.datetime "the_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "guesses", force: :cascade do |t|
+    t.integer "player_id", null: false
   end
 
-  add_index "messages", ["game_id"], name: "index_messages_on_game_id"
-  add_index "messages", ["user_id"], name: "index_messages_on_user_id"
+  add_index "guesses", ["player_id"], name: "index_guesses_on_player_id"
 
->>>>>>> Stashed changes
   create_table "moves", force: :cascade do |t|
     t.integer  "users_id"
     t.integer  "number_of_moves"
@@ -46,13 +36,8 @@ ActiveRecord::Schema.define(version: 20150627182358) do
     t.integer  "player_id"
   end
 
-<<<<<<< Updated upstream
-  add_index "moves", ["player_id"], name: "index_moves_on_player_id", using: :btree
-  add_index "moves", ["users_id"], name: "index_moves_on_users_id", using: :btree
-=======
   add_index "moves", ["player_id"], name: "index_moves_on_player_id"
   add_index "moves", ["users_id"], name: "index_moves_on_users_id"
->>>>>>> Stashed changes
 
   create_table "players", force: :cascade do |t|
     t.string   "name"
@@ -65,6 +50,17 @@ ActiveRecord::Schema.define(version: 20150627182358) do
 
   add_index "players", ["game_id"], name: "index_players_on_game_id"
   add_index "players", ["user_id"], name: "index_players_on_user_id"
+
+  create_table "shapes", force: :cascade do |t|
+    t.float   "x"
+    t.float   "y"
+    t.string  "shape_type"
+    t.float   "radius"
+    t.string  "color"
+    t.integer "guess_id",   null: false
+  end
+
+  add_index "shapes", ["guess_id"], name: "index_shapes_on_guess_id"
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false
@@ -87,10 +83,4 @@ ActiveRecord::Schema.define(version: 20150627182358) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-<<<<<<< Updated upstream
-  add_foreign_key "moves", "players"
-  add_foreign_key "players", "games"
-  add_foreign_key "players", "users"
-=======
->>>>>>> Stashed changes
 end
